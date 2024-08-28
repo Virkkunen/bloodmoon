@@ -1,0 +1,80 @@
+[gd_scene load_steps=9 format=3 uid="uid://c8ko5ni8ykps"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_uuags"]
+[ext_resource type="Texture2D" uid="uid://b1he6tpyrhna8" path="res://assets/sprites/player.png" id="2_wypnn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pfkrn"]
+size = Vector2(11, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fftb"]
+atlas = ExtResource("2_wypnn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fbgiy"]
+atlas = ExtResource("2_wypnn")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_602fq"]
+atlas = ExtResource("2_wypnn")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vpjc5"]
+atlas = ExtResource("2_wypnn")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_dcyio"]
+animations = [{
+"frames": [{
+"duration": 0.6,
+"texture": SubResource("AtlasTexture_3fftb")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fbgiy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_602fq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vpjc5")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[node name="Player" type="CharacterBody2D"]
+position = Vector2(456, 248)
+scale = Vector2(2, 2)
+collision_layer = 4
+collision_mask = 3
+script = ExtResource("1_uuags")
+
+[node name="HitboxVector" type="CollisionPolygon2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2, 2)
+process_callback = 0
+limit_left = -20
+limit_top = -20
+limit_right = 2282
+limit_bottom = 1274
+position_smoothing_enabled = true
+editor_draw_limits = true
+
+[node name="DamageCooldown" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 0.5)
+shape = SubResource("RectangleShape2D_pfkrn")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_dcyio")
+animation = &"idle"
+frame_progress = 0.530531

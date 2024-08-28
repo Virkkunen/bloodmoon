@@ -1,0 +1,88 @@
+[gd_scene load_steps=8 format=3 uid="uid://clqlpv3d8lxvb"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_bdlwq"]
+[ext_resource type="PackedScene" uid="uid://c4avsyw2xgrox" path="res://scenes/hud.tscn" id="3_i8p8l"]
+[ext_resource type="Script" path="res://scripts/zombie_spawner.gd" id="3_tepdq"]
+[ext_resource type="PackedScene" uid="uid://c8ko5ni8ykps" path="res://scenes/player.tscn" id="4_dcm4k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_opcim"]
+size = Vector2(2302, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jng0a"]
+size = Vector2(2302, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j5lne"]
+size = Vector2(20, 1254)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_bdlwq")
+
+[node name="Border" type="CanvasGroup" parent="."]
+
+[node name="TopBorder" type="StaticBody2D" parent="Border"]
+position = Vector2(-20, -20)
+collision_mask = 14
+
+[node name="Rect" type="ColorRect" parent="Border/TopBorder"]
+offset_right = 2302.0
+offset_bottom = 20.0
+color = Color(0.478431, 0.109804, 0.294118, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/TopBorder"]
+position = Vector2(1151, 10)
+shape = SubResource("RectangleShape2D_opcim")
+
+[node name="BottomBorder" type="StaticBody2D" parent="Border"]
+position = Vector2(-20, -20)
+collision_mask = 14
+
+[node name="Rect" type="ColorRect" parent="Border/BottomBorder"]
+offset_top = 1274.0
+offset_right = 2302.0
+offset_bottom = 1294.0
+color = Color(0.478431, 0.109804, 0.294118, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/BottomBorder"]
+position = Vector2(1151, 1284)
+shape = SubResource("RectangleShape2D_jng0a")
+
+[node name="RightBorder" type="StaticBody2D" parent="Border"]
+position = Vector2(-20, -20)
+collision_mask = 14
+
+[node name="Rect" type="ColorRect" parent="Border/RightBorder"]
+offset_left = 2282.0
+offset_top = 20.0
+offset_right = 2302.0
+offset_bottom = 1274.0
+color = Color(0.478431, 0.109804, 0.294118, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/RightBorder"]
+position = Vector2(2292, 647)
+shape = SubResource("RectangleShape2D_j5lne")
+
+[node name="LeftBorder" type="StaticBody2D" parent="Border"]
+position = Vector2(-20, -20)
+collision_mask = 14
+
+[node name="Rect" type="ColorRect" parent="Border/LeftBorder"]
+offset_top = 20.0
+offset_right = 20.0
+offset_bottom = 1274.0
+color = Color(0.478431, 0.109804, 0.294118, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border/LeftBorder"]
+position = Vector2(10, 647)
+shape = SubResource("RectangleShape2D_j5lne")
+
+[node name="ZombieSpawner" type="Node2D" parent="."]
+script = ExtResource("3_tepdq")
+
+[node name="PlayArea" type="ColorRect" parent="."]
+visible = false
+offset_right = 2262.0
+offset_bottom = 1254.0
+
+[node name="HUD" parent="." instance=ExtResource("3_i8p8l")]
+
+[node name="Player" parent="." instance=ExtResource("4_dcm4k")]
