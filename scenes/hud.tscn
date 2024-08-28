@@ -24,6 +24,15 @@ offset_bottom = 1048.0
 theme = ExtResource("3_62sh4")
 show_percentage = false
 
+[node name="ReloadHint" type="Label" parent="AmmoBar"]
+visible = false
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 40.0
+theme = ExtResource("2_vfj5k")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Kills" type="HBoxContainer" parent="."]
 offset_left = 36.0
 offset_top = 912.0

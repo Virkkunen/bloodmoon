@@ -1,7 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8ko5ni8ykps"]
+[gd_scene load_steps=11 format=3 uid="uid://c8ko5ni8ykps"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uuags"]
 [ext_resource type="Texture2D" uid="uid://b1he6tpyrhna8" path="res://assets/sprites/player.png" id="2_wypnn"]
+[ext_resource type="Script" path="res://scripts/gun.gd" id="3_6gmty"]
+[ext_resource type="Texture2D" uid="uid://dk85ay8qksj16" path="res://assets/sprites/gun.png" id="3_u8vm2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfkrn"]
 size = Vector2(11, 15)
@@ -54,8 +56,6 @@ collision_layer = 4
 collision_mask = 3
 script = ExtResource("1_uuags")
 
-[node name="HitboxVector" type="CollisionPolygon2D" parent="."]
-
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 process_callback = 0
@@ -66,10 +66,6 @@ limit_bottom = 1274
 position_smoothing_enabled = true
 editor_draw_limits = true
 
-[node name="DamageCooldown" type="Timer" parent="."]
-wait_time = 2.0
-one_shot = true
-
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_pfkrn")
@@ -78,3 +74,24 @@ shape = SubResource("RectangleShape2D_pfkrn")
 sprite_frames = SubResource("SpriteFrames_dcyio")
 animation = &"idle"
 frame_progress = 0.530531
+
+[node name="Gun" type="CanvasGroup" parent="."]
+position = Vector2(-0.5, 3.5)
+script = ExtResource("3_6gmty")
+
+[node name="GunSprite" type="Sprite2D" parent="Gun"]
+position = Vector2(6.5, 0)
+texture = ExtResource("3_u8vm2")
+
+[node name="Muzzle" type="Marker2D" parent="Gun"]
+position = Vector2(9, -1)
+
+[node name="Timers" type="CanvasGroup" parent="."]
+
+[node name="DamageCooldown" type="Timer" parent="Timers"]
+wait_time = 2.0
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="Timers"]
+wait_time = 2.0
+one_shot = true
