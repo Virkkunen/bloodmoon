@@ -74,6 +74,7 @@ func _on_damage_cooldown_timeout() -> void:
 func _on_reload_timer_timeout() -> void:
 	can_shoot = true
 	ammo = max_ammo
+	Hud.ammo_bar.indeterminate = false
 
 func player_death() -> void:
 	pass

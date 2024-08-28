@@ -2,24 +2,35 @@ extends CanvasLayer
 
 @onready var health_bar : ProgressBar = $HealthBar
 @onready var ammo_bar : ProgressBar = $AmmoBar
+@onready var reload_hint : Label = $AmmoBar/ReloadHint
 @onready var score_label : Label = $Kills/KillsCounter # a
-@onready var player : CharacterBody2D = $"../Player"
+@onready var Player : CharacterBody2D = $"../Player"
+
+@export var animation_speed = 12
+var target_ammo_value : float
+var target_health_value : float
 
 func _ready() -> void:
-	health_bar.max_value = player.max_health
-	ammo_bar.max_value = player.max_ammo
+	health_bar.max_value = Player.max_health
+	ammo_bar.max_value = Player.max_ammo
 
-	player.ammo_changed.connect(update_ammo)
-	player.health_changed.connect(update_health)
+	Player.ammo_changed.connect(update_ammo)
+	Player.health_changed.connect(update_health)
+
+func _process(delta: float) -> void:
+	if ammo_bar.value != target_ammo_value:
+		ammo_bar.value = lerp(ammo_bar.value, target_ammo_value, animation_speed * delta)
+	if health_bar.value != target_health_value:
+		health_bar.value = lerp(health_bar.value, target_health_value, animation_speed * delta)
 
 func update_score(score: int) -> void:
 	score_label.text = str(score)
 
 func update_health(health: float) -> void:
-	health_bar.value = health
+	target_health_value = health
 
 func update_ammo(ammo: int) -> void:
-	ammo_bar.value = ammo
+	target_ammo_value = float(ammo)
 	if ammo == 0:
 		show_reload_hint("reload")
 	else:
@@ -27,7 +38,10 @@ func update_ammo(ammo: int) -> void:
 
 func show_reload_hint(label_text: String = ""):
 	if label_text:
-		$AmmoBar/ReloadHint.visible = true
-		$AmmoBar/ReloadHint.text = label_text
+		reload_hint.visible = true
+		reload_hint.text = label_text
+		if label_text == "reloading":
+			ammo_bar.indeterminate = true
 	else:
-		$AmmoBar/ReloadHint.visible = false
+		reload_hint.visible = false
+		ammo_bar.indeterminate = false
