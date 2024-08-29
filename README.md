@@ -1,3 +1,3 @@
 # Blood Moon
 
-[zombies](./zombies.webm)
+[zombies](zombies.webm)
