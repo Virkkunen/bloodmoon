@@ -6,6 +6,7 @@ extends CanvasLayer
 @onready var score_label : Label = $Kills/KillsCounter
 @onready var Player : CharacterBody2D = $"../Player"
 @onready var Spawner : Node2D = $"../ZombieSpawner"
+@onready var FloatingScore : PackedScene = preload("res://scenes/floating_score.tscn")
 
 @export var animation_speed = 12
 var target_ammo_value : float
@@ -14,12 +15,12 @@ var target_health_value : float
 func _ready() -> void:
 	health_bar.max_value = Player.max_health
 	ammo_bar.max_value = Player.max_ammo
+	score_label.text = "0"
 
 	Player.ammo_changed.connect(update_ammo)
 	Player.health_changed.connect(update_health)
 	Global.score_changed.connect(update_score)
-
-	update_score()
+	print(score_label.global_position)
 
 func _process(delta: float) -> void:
 	if ammo_bar.value != target_ammo_value:
@@ -29,6 +30,7 @@ func _process(delta: float) -> void:
 
 func update_score() -> void:
 	score_label.text = str(Global.score)
+	show_floating_score()
 
 func update_health(health: float) -> void:
 	target_health_value = health
@@ -49,3 +51,16 @@ func show_reload_hint(label_text: String = ""):
 	else:
 		reload_hint.visible = false
 		ammo_bar.indeterminate = false
+
+func show_floating_score() -> void:
+	var floating_label = FloatingScore.instantiate() as Label	
+	var score_label_position = score_label.global_position
+	var score_label_offset = Vector2(0, 15)
+	floating_label.position = score_label_position - score_label_offset
+	add_child(floating_label)
+	
+	var tween : Tween = floating_label.create_tween()
+	tween.tween_property(floating_label, "position", floating_label.position + Vector2(0, -30), 0.5).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(floating_label, "modulate", Color(1, 1, 1, 0), 0.5).set_ease(Tween.EASE_OUT)
+	tween.finished.connect(floating_label.queue_free)
+	
