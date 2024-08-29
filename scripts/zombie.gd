@@ -62,6 +62,6 @@ func sprite_colour_on_damage() -> void:
 	sprite.modulate = Global.colour03
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1), 0.3).set_ease(Tween.EASE_IN)
 
-func get_hit(damage: float) -> void:
+func get_hit(incoming_damage: float) -> void:
 	sprite_colour_on_damage()
-	health -= damage
+	health -= incoming_damage

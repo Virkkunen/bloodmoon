@@ -20,10 +20,7 @@ func spawn_zombies(num_zombies: int = 10) -> void:
 			if is_valid_position(zombie.position):
 				valid_position = true
 
-		# if randi() % 2 == 0:
-		# 	zombie.rotation = 0
-		# else:
-		# 	zombie.rotation = PI
+		zombie.name = "Zombie " + str(i)
 		Global.zombies.append(zombie)
 		add_child(zombie)
 
