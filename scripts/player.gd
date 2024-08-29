@@ -24,6 +24,7 @@ signal health_changed
 @onready var damage_cooldown : Timer = $Timers/DamageCooldown
 @onready var reload_timer : Timer = $Timers/ReloadTimer
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var shot_delay : Timer = $Timers/ShotDelay
 
 var can_be_damaged = true
 var can_shoot = true
@@ -36,6 +37,7 @@ func _ready() -> void:
 	# signals
 	damage_cooldown.timeout.connect(_on_damage_cooldown_timeout)
 	reload_timer.timeout.connect(_on_reload_timer_timeout)
+	shot_delay.timeout.connect(_on_shot_delay_timeout)
 
 func _physics_process(_delta: float) -> void:
 	get_input()
@@ -93,7 +95,9 @@ func update_animation() -> void:
 		sprite.flip_h = true
 
 func shoot() -> void:
-	if ammo > 0:
+	if ammo > 0 and can_shoot:
+		shot_delay.start()
+		can_shoot = false
 		var bullet = Bullet.instantiate() as Area2D
 		bullet.position = $Gun/Muzzle.global_position
 		bullet.velocity = get_muzzle_direction(bullet) * bullet.speed
@@ -101,8 +105,12 @@ func shoot() -> void:
 		get_parent().add_child(bullet)
 
 		ammo -= 1
-	else:
+	elif ammo <=0 and not can_shoot:
 		can_shoot = false
+
+func _on_shot_delay_timeout() -> void:
+	if ammo > 0:
+		can_shoot = true
 
 func get_muzzle_direction(bullet: Area2D) -> Vector2:
 	var cursor_position = get_global_mouse_position()
