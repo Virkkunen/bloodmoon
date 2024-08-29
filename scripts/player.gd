@@ -21,10 +21,15 @@ signal health_changed
 
 # @onready var hitbox : CollisionPolygon2D = $Hitbox
 @onready var Hud : CanvasLayer = $"../HUD"
-@onready var damage_cooldown : Timer = $Timers/DamageCooldown
-@onready var reload_timer : Timer = $Timers/ReloadTimer
+@onready var timer_damage_cooldown : Timer = $Timers/DamageCooldown
+@onready var timer_reload_full : Timer = $Timers/ReloadFullTimer
+@onready var timer_reload_partial : Timer = $Timers/ReloadPartialTimer
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
-@onready var shot_delay : Timer = $Timers/ShotDelay
+@onready var timer_shot_delay : Timer = $Timers/ShotDelay
+@onready var sound_reload_partial : AudioStreamPlayer2D = $Sounds/ReloadPartialSound
+@onready var sound_reload_full : AudioStreamPlayer2D = $Sounds/ReloadFullSound
+@onready var sound_shot01 : AudioStreamPlayer2D = $Sounds/Shot01
+@onready var sound_shot_empty : AudioStreamPlayer2D = $Sounds/ShotEmpty
 
 var can_be_damaged = true
 var can_shoot = true
@@ -35,9 +40,10 @@ func _ready() -> void:
 	health = max_health
 
 	# signals
-	damage_cooldown.timeout.connect(_on_damage_cooldown_timeout)
-	reload_timer.timeout.connect(_on_reload_timer_timeout)
-	shot_delay.timeout.connect(_on_shot_delay_timeout)
+	timer_damage_cooldown.timeout.connect(_on_damage_cooldown_timeout)
+	timer_reload_full.timeout.connect(_on_reload_timer_timeout)
+	timer_reload_partial.timeout.connect(_on_reload_timer_timeout)
+	timer_shot_delay.timeout.connect(_on_shot_delay_timeout)
 
 func _physics_process(_delta: float) -> void:
 	get_input()
@@ -57,18 +63,23 @@ func get_input() -> void:
 	velocity = input_dir * speed
 
 	# shooting
-	if Input.is_action_just_pressed("shoot") and can_shoot:
+	if Input.is_action_just_pressed("shoot"):
 		shoot()
 
 	if Input.is_action_just_pressed("reload"):
-		reload_timer.start()
+		if ammo > 0:
+			timer_reload_partial.start()
+			sound_reload_partial.play()
+		elif ammo <= 0:
+			timer_reload_full.start()
+			sound_reload_full.play()
 		Hud.show_reload_hint("reloading")
 
 func player_hit(damage: float) -> void:
 	if can_be_damaged:
 		can_be_damaged = false
 		health -= damage
-		damage_cooldown.start()
+		timer_damage_cooldown.start()
 		sprite_colour_on_damage()
 
 func _on_damage_cooldown_timeout() -> void:
@@ -96,7 +107,8 @@ func update_animation() -> void:
 
 func shoot() -> void:
 	if ammo > 0 and can_shoot:
-		shot_delay.start()
+		sound_shot01.play()
+		timer_shot_delay.start()
 		can_shoot = false
 		var bullet = Bullet.instantiate() as Area2D
 		bullet.position = $Gun/Muzzle.global_position
@@ -105,7 +117,9 @@ func shoot() -> void:
 		get_parent().add_child(bullet)
 
 		ammo -= 1
-	elif ammo <= 0 and not can_shoot:
+	elif ammo <= 0:
+		if not sound_shot_empty.playing:
+			sound_shot_empty.play()
 		can_shoot = false
 
 func _on_shot_delay_timeout() -> void:

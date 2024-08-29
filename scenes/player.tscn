@@ -1,9 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://c8ko5ni8ykps"]
+[gd_scene load_steps=15 format=3 uid="uid://c8ko5ni8ykps"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uuags"]
 [ext_resource type="Texture2D" uid="uid://b1he6tpyrhna8" path="res://assets/sprites/player.png" id="2_wypnn"]
 [ext_resource type="Script" path="res://scripts/gun.gd" id="3_6gmty"]
 [ext_resource type="Texture2D" uid="uid://dk85ay8qksj16" path="res://assets/sprites/gun.png" id="3_u8vm2"]
+[ext_resource type="AudioStream" uid="uid://c2guwjcuqle14" path="res://assets/sfx/reload_partial.ogg" id="5_ktjt7"]
+[ext_resource type="AudioStream" uid="uid://c5p504lem5bpf" path="res://assets/sfx/reload_full.ogg" id="6_7bnfi"]
+[ext_resource type="AudioStream" uid="uid://o2varaljpn5c" path="res://assets/sfx/shot01.ogg" id="7_nwq0k"]
+[ext_resource type="AudioStream" uid="uid://thhximpinna8" path="res://assets/sfx/shot_empty.ogg" id="8_gm0x1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfkrn"]
 size = Vector2(11, 15)
@@ -93,12 +97,37 @@ position = Vector2(9, -1)
 wait_time = 2.0
 one_shot = true
 
-[node name="ReloadTimer" type="Timer" parent="Timers"]
-wait_time = 2.0
+[node name="ReloadFullTimer" type="Timer" parent="Timers"]
+wait_time = 2.2
 one_shot = true
 
 [node name="ShotDelay" type="Timer" parent="Timers"]
 wait_time = 0.3
 one_shot = true
+
+[node name="ReloadPartialTimer" type="Timer" parent="Timers"]
+wait_time = 1.2
+one_shot = true
+
+[node name="Sounds" type="CanvasGroup" parent="."]
+
+[node name="ReloadPartialSound" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2(-0.5, 3.5)
+stream = ExtResource("5_ktjt7")
+area_mask = 4
+
+[node name="ReloadFullSound" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2(-0.5, 3.5)
+stream = ExtResource("6_7bnfi")
+area_mask = 4
+
+[node name="Shot01" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("7_nwq0k")
+volume_db = -4.0
+area_mask = 4
+
+[node name="ShotEmpty" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("8_gm0x1")
+area_mask = 4
 
 [connection signal="health_changed" from="." to="." method="_on_health_changed"]
