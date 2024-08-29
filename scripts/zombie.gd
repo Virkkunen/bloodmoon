@@ -10,16 +10,15 @@ signal zombie_killed
 	set(value):
 		health = value
 		if health <= 0:
-			emit_signal("zombie_killed", self)
-			if Global.zombies.has(self):
-				Global.zombies.erase(self)
-			Global.score += 1
-			queue_free()
+			kill_zombie()
+
 @export var max_damage = 25.0
 @export var damage : float
 @export var wander_time : float
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var head : Area2D = $Head
+@onready var body : Area2D = $Body
 
 var direction = Vector2.ZERO
 var time_since_direction_change = 0.0
@@ -65,3 +64,24 @@ func sprite_colour_on_damage() -> void:
 func get_hit(incoming_damage: float) -> void:
 	sprite_colour_on_damage()
 	health -= incoming_damage
+
+func kill_zombie() -> void:
+	# get score
+	emit_signal("zombie_killed", self)
+	if Global.zombies.has(self):
+		Global.zombies.erase(self)
+	Global.score += 1
+	# stop physics
+	set_physics_process(false)
+	collision_layer = 0
+	collision_mask = 0
+	head.collision_layer = 0
+	body.collision_layer = 0
+	sprite.play("idle")
+	# animation
+	var tween : Tween = create_tween()
+	tween.tween_property(sprite, "modulate", Global.colour03, 0.2).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(sprite, "rotation_degrees", 90, 0.1).set_ease(Tween.EASE_IN)
+	tween.tween_property(sprite, "modulate", Color(0, 0, 0, 0), 0.3).set_delay(2)
+	# remove zombie
+	tween.finished.connect(self.queue_free)

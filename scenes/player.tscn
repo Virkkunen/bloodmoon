@@ -59,6 +59,7 @@ scale = Vector2(2, 2)
 collision_layer = 4
 collision_mask = 3
 motion_mode = 1
+platform_wall_layers = 1
 script = ExtResource("1_uuags")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -78,7 +79,6 @@ shape = SubResource("RectangleShape2D_pfkrn")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_dcyio")
 animation = &"idle"
-frame_progress = 0.530531
 
 [node name="Gun" type="CanvasGroup" parent="."]
 position = Vector2(-0.5, 3.5)

@@ -19,6 +19,7 @@ func _ready() -> void:
 
 	Player.ammo_changed.connect(update_ammo)
 	Player.health_changed.connect(update_health)
+	Player.player_dead.connect(_on_player_dead)
 	Global.score_changed.connect(update_score)
 	print(score_label.global_position)
 
@@ -65,3 +66,5 @@ func show_floating_score() -> void:
 	tween.parallel().tween_property(floating_label, "modulate", Color(1, 1, 1, 0), 0.5).set_ease(Tween.EASE_OUT)
 	tween.finished.connect(floating_label.queue_free)
 	
+func _on_player_dead() -> void:
+	queue_free()

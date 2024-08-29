@@ -2,15 +2,19 @@ extends CharacterBody2D
 
 signal ammo_changed
 signal health_changed
+signal player_dead
 
 @export var speed = 200.0
 @export var max_health = 100.0
-@export var health : float :
+@export var health : float = max_health :
 	get:
 		return health
 	set(value):
 		health = value
 		emit_signal("health_changed", health)
+		if health <= 0:
+			player_death()
+			pass
 @export var max_ammo = 12
 @export var ammo : int :
 	get:
@@ -31,6 +35,7 @@ signal health_changed
 @onready var sound_reload_full : AudioStreamPlayer2D = $Sounds/ReloadFullSound
 @onready var sound_shot01 : AudioStreamPlayer2D = $Sounds/Shot01
 @onready var sound_shot_empty : AudioStreamPlayer2D = $Sounds/ShotEmpty
+@onready var camera : Camera2D = $Camera2D
 
 var can_be_damaged = true
 var can_shoot = true
@@ -111,7 +116,20 @@ func _on_reload_timer_timeout() -> void:
 	Hud.ammo_bar.indeterminate = false
 
 func player_death() -> void:
-	pass
+	# stop physics
+	set_physics_process(false)
+	collision_layer = 0
+	collision_mask = 0
+	sprite.play("idle")
+	# animation
+	var tween : Tween = create_tween()
+	tween.tween_property(sprite, "modulate", Global.colour03, 0.2).set_ease(Tween.EASE_IN_OUT)
+	tween.parallel().tween_property(sprite, "rotation_degrees", 90, 0.1).set_ease(Tween.EASE_IN)
+	tween.tween_property(sprite, "modulate", Color(0, 0, 0, 0), 0.3).set_delay(2)
+	# tween.parallel().tween_property(camera, "zoom", Vector2(1, 1), 0.6).set_delay(0.5).set_ease(Tween.EASE_IN)
+	# remove
+	tween.finished.connect(self.queue_free)
+	emit_signal("player_dead")
 
 func update_animation() -> void:
 	if velocity.length() > 0:
