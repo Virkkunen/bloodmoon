@@ -1,8 +1,19 @@
 extends CharacterBody2D
 
-@export var speed = 20
-@export var radius = 14
-@export var health = 150
+signal zombie_killed
+
+@export var speed = 20.0
+@export var max_health = 150.0
+@export var health : float :
+	get:
+		return health
+	set(value):
+		health = value
+		if health <= 0:
+			emit_signal("zombie_killed", 1)
+			if Global.zombies.has(self):
+				Global.zombies.erase(self)
+			queue_free()
 @export var attack = 25
 @export var wander_time : float
 
@@ -13,8 +24,8 @@ var time_since_direction_change = 0.0
 
 func _ready() -> void:
 	add_to_group("Zombies")
+	health = randf_range(max_health - 0.2 * max_health, max_health)
 	wander_time = randf_range(5, 45)
-	update_flip()
 	change_direction()
 
 func _physics_process(delta: float) -> void:
@@ -27,7 +38,6 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	update_animation()
-	update_flip()
 
 func update_animation() -> void:
 	if velocity.length() > 0:
@@ -35,9 +45,7 @@ func update_animation() -> void:
 	else:
 		sprite.play("idle")
 
-	update_flip()
-
-func update_flip() -> void:
+	# update_flip()
 	if velocity.x < 0:
 		sprite.flip_h = true
 	else:
@@ -45,3 +53,12 @@ func update_flip() -> void:
 
 func change_direction() -> void:
 	direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
+
+func sprite_colour_on_damage() -> void:
+	var tween : Tween = create_tween()
+	sprite.modulate = Global.colour03
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), 0.3).set_ease(Tween.EASE_IN)
+
+func get_hit(damage: float) -> void:
+	sprite_colour_on_damage()
+	health -= damage

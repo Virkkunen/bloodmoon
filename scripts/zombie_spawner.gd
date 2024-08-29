@@ -4,10 +4,9 @@ var Zombie = preload("res://scenes/zombie.tscn")
 
 @export var min_distance_from_center = 500
 @export var min_distance_from_edges = 40
-@export var existing_zombies = []
 
 func _ready() -> void:
-	spawn_zombies(randi_range(50, 100))
+	spawn_zombies(randi_range(5, 10))
 
 func spawn_zombies(num_zombies: int = 10) -> void:
 	var valid_position = false
@@ -25,7 +24,7 @@ func spawn_zombies(num_zombies: int = 10) -> void:
 		# 	zombie.rotation = 0
 		# else:
 		# 	zombie.rotation = PI
-
+		Global.zombies.append(zombie)
 		add_child(zombie)
 
 func is_valid_position(pos: Vector2) -> bool:

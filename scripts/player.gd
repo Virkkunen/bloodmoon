@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal ammo_changed
 signal health_changed
 
-@export var speed = 200
+@export var speed = 200.0
 @export var max_health = 100.0
 @export var health : float :
 	get:
@@ -110,7 +110,6 @@ func get_muzzle_direction(bullet: Area2D) -> Vector2:
 	return direction
 
 func sprite_colour_on_damage() -> void:
-	print("here")
 	var tween : Tween = create_tween()
 	sprite.modulate = Global.colour03
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1), 1.2).set_delay(0.3).set_ease(Tween.EASE_IN)

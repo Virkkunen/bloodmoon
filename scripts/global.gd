@@ -4,6 +4,8 @@ extends Node2D
 @export var colour02 = Color.html("#ba5044")
 @export var colour03 = Color.html("#7a1c4b")
 @export var colour04 = Color.html("#1b0326")
+@export var zombies = []
+@export var score = 0
 
 var screen_size : Vector2
 var screen_center : Vector2
