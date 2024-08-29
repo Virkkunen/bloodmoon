@@ -7,7 +7,6 @@ extends CanvasLayer
 @onready var Player : CharacterBody2D = $"../Player"
 @onready var Spawner : Node2D = $"../ZombieSpawner"
 
-@export var score = 0
 @export var animation_speed = 12
 var target_ammo_value : float
 var target_health_value : float
@@ -31,8 +30,8 @@ func _process(delta: float) -> void:
 		health_bar.value = lerp(health_bar.value, target_health_value, animation_speed * delta)
 
 func update_score(point: int) -> void:
-	score += point
-	score_label.text = str(score)
+	Global.score += point
+	score_label.text = str(Global.score)
 
 func update_health(health: float) -> void:
 	target_health_value = health
