@@ -67,6 +67,7 @@ func player_hit(damage: float) -> void:
 		can_be_damaged = false
 		health -= damage
 		damage_cooldown.start()
+		sprite_colour_on_damage()
 
 func _on_damage_cooldown_timeout() -> void:
 	can_be_damaged = true
@@ -99,7 +100,7 @@ func shoot() -> void:
 
 		get_parent().add_child(bullet)
 
-		ammo -= 1	
+		ammo -= 1
 	else:
 		can_shoot = false
 
@@ -107,3 +108,9 @@ func get_muzzle_direction(bullet: Area2D) -> Vector2:
 	var cursor_position = get_global_mouse_position()
 	var direction = (cursor_position - bullet.position).normalized()
 	return direction
+
+func sprite_colour_on_damage() -> void:
+	print("here")
+	var tween : Tween = create_tween()
+	sprite.modulate = Global.colour03
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), 1.2).set_delay(0.3).set_ease(Tween.EASE_IN)

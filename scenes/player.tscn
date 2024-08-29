@@ -95,3 +95,5 @@ one_shot = true
 [node name="ReloadTimer" type="Timer" parent="Timers"]
 wait_time = 2.0
 one_shot = true
+
+[connection signal="health_changed" from="." to="." method="_on_health_changed"]
