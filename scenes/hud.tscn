@@ -85,3 +85,9 @@ offset_top = 128.0
 offset_right = 50.0
 offset_bottom = 151.0
 text = "ammo"
+
+[node name="health" type="Label" parent="DEBUG"]
+offset_top = 160.0
+offset_right = 50.0
+offset_bottom = 183.0
+text = "health"

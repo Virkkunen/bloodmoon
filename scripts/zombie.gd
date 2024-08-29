@@ -15,7 +15,8 @@ signal zombie_killed
 				Global.zombies.erase(self)
 			Global.score += 1
 			queue_free()
-@export var attack = 25
+@export var max_damage = 25.0
+@export var damage : float
 @export var wander_time : float
 
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
@@ -26,6 +27,7 @@ var time_since_direction_change = 0.0
 func _ready() -> void:
 	add_to_group("Zombies")
 	health = randf_range(max_health - 0.2 * max_health, max_health)
+	damage = randf_range(max_damage - 0.2 * max_damage, max_damage)
 	wander_time = randf_range(5, 45)
 	change_direction()
 

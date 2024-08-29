@@ -55,13 +55,14 @@ func _physics_process(_delta: float) -> void:
 	$"../HUD/DEBUG/can_shoot".text = "can_shoot: " + str(can_shoot)
 	$"../HUD/DEBUG/reload_partial".text = "reload_partial: " + str(timer_reload_partial.time_left)
 	$"../HUD/DEBUG/reload_full".text = "reload_full: " + str(timer_reload_full.time_left)
+	$"../HUD/DEBUG/health".text = "health: " + str(health)
 
 	# collision
 	for i in get_slide_collision_count():
 		var collision := get_slide_collision(i)
 		var body := collision.get_collider()
 		if body.is_in_group("Zombies"):
-			player_hit(body.attack)
+			player_hit(body.damage)
 
 func get_input() -> void:
 	# movement
