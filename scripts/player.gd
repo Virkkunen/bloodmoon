@@ -105,7 +105,7 @@ func shoot() -> void:
 		get_parent().add_child(bullet)
 
 		ammo -= 1
-	elif ammo <=0 and not can_shoot:
+	elif ammo <= 0 and not can_shoot:
 		can_shoot = false
 
 func _on_shot_delay_timeout() -> void:

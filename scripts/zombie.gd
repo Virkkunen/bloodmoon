@@ -10,9 +10,10 @@ signal zombie_killed
 	set(value):
 		health = value
 		if health <= 0:
-			emit_signal("zombie_killed", 1)
+			emit_signal("zombie_killed", self)
 			if Global.zombies.has(self):
 				Global.zombies.erase(self)
+			Global.score += 1
 			queue_free()
 @export var attack = 25
 @export var wander_time : float

@@ -1,11 +1,18 @@
 extends Node2D
 
+signal score_changed
+
 @export var colour01 = Color.html("#eff9d6")
 @export var colour02 = Color.html("#ba5044")
 @export var colour03 = Color.html("#7a1c4b")
 @export var colour04 = Color.html("#1b0326")
 @export var zombies = []
-@export var score = 0
+@export var score = 0 :
+  get:
+    return score
+  set(value):
+    score = value
+    emit_signal("score_changed")
 
 var screen_size : Vector2
 var screen_center : Vector2

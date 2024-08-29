@@ -1,7 +1,6 @@
 extends Node2D
 
 @export var zombie_scene = preload("res://scenes/zombie.tscn")
-@export var kills : int = 0
 
 @onready var player_instance : CharacterBody2D = $Player
 @onready var hud : CanvasLayer = $HUD
@@ -10,7 +9,6 @@ extends Node2D
 
 func _ready() -> void:
 	spawn_player()
-	hud.update_score(kills)
 
 # func spawn_player() -> void:
 # 	if is_instance_valid(player_instance):

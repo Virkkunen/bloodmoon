@@ -17,11 +17,9 @@ func _ready() -> void:
 
 	Player.ammo_changed.connect(update_ammo)
 	Player.health_changed.connect(update_health)
+	Global.score_changed.connect(update_score)
 
-	print(Global.zombies)
-
-	for zombie in Global.zombies:
-		zombie.zombie_killed.connect(update_score)
+	update_score()
 
 func _process(delta: float) -> void:
 	if ammo_bar.value != target_ammo_value:
@@ -29,8 +27,7 @@ func _process(delta: float) -> void:
 	if health_bar.value != target_health_value:
 		health_bar.value = lerp(health_bar.value, target_health_value, animation_speed * delta)
 
-func update_score(point: int) -> void:
-	Global.score += point
+func update_score() -> void:
 	score_label.text = str(Global.score)
 
 func update_health(health: float) -> void:
