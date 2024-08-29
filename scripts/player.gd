@@ -25,6 +25,7 @@ signal health_changed
 @onready var timer_reload_full : Timer = $Timers/ReloadFullTimer
 @onready var timer_reload_partial : Timer = $Timers/ReloadPartialTimer
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite_gun : Sprite2D = $Gun/GunSprite
 @onready var timer_shot_delay : Timer = $Timers/ShotDelay
 @onready var sound_reload_partial : AudioStreamPlayer2D = $Sounds/ReloadPartialSound
 @onready var sound_reload_full : AudioStreamPlayer2D = $Sounds/ReloadFullSound
@@ -33,6 +34,7 @@ signal health_changed
 
 var can_be_damaged = true
 var can_shoot = true
+var can_reload = true
 var Bullet : PackedScene = preload("res://scenes/bullet.tscn")
 
 func _ready() -> void:
@@ -49,6 +51,10 @@ func _physics_process(_delta: float) -> void:
 	get_input()
 	move_and_slide()
 	update_animation()
+	$"../HUD/DEBUG/can_reload".text = "can_reload: " + str(can_reload)
+	$"../HUD/DEBUG/can_shoot".text = "can_shoot: " + str(can_shoot)
+	$"../HUD/DEBUG/reload_partial".text = "reload_partial: " + str(timer_reload_partial.time_left)
+	$"../HUD/DEBUG/reload_full".text = "reload_full: " + str(timer_reload_full.time_left)
 
 	# collision
 	for i in get_slide_collision_count():
@@ -67,13 +73,8 @@ func get_input() -> void:
 		shoot()
 
 	if Input.is_action_just_pressed("reload"):
-		if ammo > 0:
-			timer_reload_partial.start()
-			sound_reload_partial.play()
-		elif ammo <= 0:
-			timer_reload_full.start()
-			sound_reload_full.play()
-		Hud.show_reload_hint("reloading")
+		reload()
+
 
 func player_hit(damage: float) -> void:
 	if can_be_damaged:
@@ -85,8 +86,26 @@ func player_hit(damage: float) -> void:
 func _on_damage_cooldown_timeout() -> void:
 	can_be_damaged = true
 
+func reload() -> void:
+	if not can_reload:
+		return
+
+	can_reload = false
+	can_shoot = false
+	timer_shot_delay.stop()
+
+	if ammo > 0:
+		timer_reload_partial.start()
+		sound_reload_partial.play()
+	else:
+		timer_reload_full.start()
+		sound_reload_full.play()
+
+	Hud.show_reload_hint("reloading")
+
 func _on_reload_timer_timeout() -> void:
 	can_shoot = true
+	can_reload = true
 	ammo = max_ammo
 	Hud.ammo_bar.indeterminate = false
 
@@ -107,23 +126,20 @@ func update_animation() -> void:
 
 func shoot() -> void:
 	if ammo > 0 and can_shoot:
-		sound_shot01.play()
+		random_sound(sound_shot01)
 		timer_shot_delay.start()
-		can_shoot = false
 		var bullet = Bullet.instantiate() as Area2D
 		bullet.position = $Gun/Muzzle.global_position
 		bullet.velocity = get_muzzle_direction(bullet) * bullet.speed
-
 		get_parent().add_child(bullet)
-
 		ammo -= 1
-	elif ammo <= 0:
-		if not sound_shot_empty.playing:
-			sound_shot_empty.play()
 		can_shoot = false
 
+	elif ammo <= 0 and not sound_shot_empty.playing and can_reload:
+		sound_shot_empty.play()
+
 func _on_shot_delay_timeout() -> void:
-	if ammo > 0:
+	if ammo > 0 and not can_shoot:
 		can_shoot = true
 
 func get_muzzle_direction(bullet: Area2D) -> Vector2:
@@ -135,3 +151,8 @@ func sprite_colour_on_damage() -> void:
 	var tween : Tween = create_tween()
 	sprite.modulate = Global.colour03
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1), 1.2).set_delay(0.3).set_ease(Tween.EASE_IN)
+
+func random_sound(sound: AudioStreamPlayer2D) -> void:
+	sound.pitch_scale = randf_range(0.8, 1.05)
+	sound.volume_db = randf_range(-1.2, 1.4)
+	sound.play()

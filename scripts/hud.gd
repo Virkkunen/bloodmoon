@@ -36,6 +36,7 @@ func update_health(health: float) -> void:
 	target_health_value = health
 
 func update_ammo(ammo: int) -> void:
+	$DEBUG/ammo.text = "Ammo: " + str(ammo)
 	target_ammo_value = float(ammo)
 	if ammo == 0:
 		show_reload_hint("reload")

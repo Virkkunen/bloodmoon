@@ -114,11 +114,13 @@ one_shot = true
 [node name="ReloadPartialSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(-0.5, 3.5)
 stream = ExtResource("5_ktjt7")
+volume_db = 6.0
 area_mask = 4
 
 [node name="ReloadFullSound" type="AudioStreamPlayer2D" parent="Sounds"]
 position = Vector2(-0.5, 3.5)
 stream = ExtResource("6_7bnfi")
+volume_db = 6.0
 area_mask = 4
 
 [node name="Shot01" type="AudioStreamPlayer2D" parent="Sounds"]
@@ -128,6 +130,7 @@ area_mask = 4
 
 [node name="ShotEmpty" type="AudioStreamPlayer2D" parent="Sounds"]
 stream = ExtResource("8_gm0x1")
+volume_db = 6.0
 area_mask = 4
 
 [connection signal="health_changed" from="." to="." method="_on_health_changed"]
