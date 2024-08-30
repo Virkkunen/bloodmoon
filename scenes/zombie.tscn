@@ -54,6 +54,7 @@ animations = [{
 }]
 
 [node name="Zombie" type="CharacterBody2D"]
+z_index = 4
 position = Vector2(991, 494)
 scale = Vector2(2, 2)
 collision_layer = 2

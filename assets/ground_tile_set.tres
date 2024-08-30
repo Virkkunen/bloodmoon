@@ -1,0 +1,17 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://1r6158yh5shr"]
+
+[ext_resource type="Texture2D" uid="uid://c4v66q56uddyw" path="res://assets/sprites/checker.png" id="1_ug6jg"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nvc1k"]
+resource_name = " bg"
+texture = ExtResource("1_ug6jg")
+0:0/0 = 0
+0:0/0/probability = 0.25
+1:0/0 = 0
+0:1/0 = 0
+0:1/0/probability = 0.1
+1:1/0 = 0
+1:1/0/probability = 0.5
+
+[resource]
+sources/0 = SubResource("TileSetAtlasSource_nvc1k")

@@ -1,11 +1,7 @@
 extends Node2D
 
-@export var zombie_scene = preload("res://scenes/zombie.tscn")
-
 @onready var player_instance : CharacterBody2D = $Player
 @onready var hud : CanvasLayer = $HUD
-
-
 
 func _ready() -> void:
 	spawn_player()
