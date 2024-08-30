@@ -6,6 +6,7 @@
 [ext_resource type="Theme" uid="uid://b6cje1ejjcffn" path="res://assets/themes/health.tres" id="3_ha305"]
 
 [node name="HUD" type="CanvasLayer"]
+layer = 10
 script = ExtResource("1_kp1wf")
 
 [node name="HealthBar" type="ProgressBar" parent="."]
