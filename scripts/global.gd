@@ -14,6 +14,8 @@ signal score_changed
     score = value
     emit_signal("score_changed")
 
+@export var debug = true
+
 var screen_size : Vector2
 var screen_center : Vector2
 

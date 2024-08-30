@@ -57,11 +57,14 @@ func _physics_process(_delta: float) -> void:
 	get_input()
 	move_and_slide()
 	update_animation()
-	$"../HUD/DEBUG/can_reload".text = "can_reload: " + str(can_reload)
-	$"../HUD/DEBUG/can_shoot".text = "can_shoot: " + str(can_shoot)
-	$"../HUD/DEBUG/reload_partial".text = "reload_partial: " + str(timer_reload_partial.time_left)
-	$"../HUD/DEBUG/reload_full".text = "reload_full: " + str(timer_reload_full.time_left)
-	$"../HUD/DEBUG/health".text = "health: " + str(health)
+
+	if Global.debug:
+		$"../HUD/DEBUG".visible = true
+		$"../HUD/DEBUG/can_reload".text = "can_reload: " + str(can_reload)
+		$"../HUD/DEBUG/can_shoot".text = "can_shoot: " + str(can_shoot)
+		$"../HUD/DEBUG/reload_partial".text = "reload_partial: " + str(timer_reload_partial.time_left)
+		$"../HUD/DEBUG/reload_full".text = "reload_full: " + str(timer_reload_full.time_left)
+		$"../HUD/DEBUG/health".text = "health: " + str(health)
 
 	# collision
 	for i in get_slide_collision_count():
@@ -125,7 +128,7 @@ func player_death() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	sprite.play("idle")
-	
+
 	# animation
 	var tween : Tween = create_tween()
 	tween.tween_property(sprite, "modulate", Global.colour03, 0.2).set_ease(Tween.EASE_IN_OUT)
