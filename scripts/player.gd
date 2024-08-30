@@ -104,9 +104,11 @@ func reload() -> void:
 	if ammo > 0:
 		timer_reload_partial.start()
 		sound_reload_partial.play()
+		gun.reload_anim(false)
 	else:
 		timer_reload_full.start()
 		sound_reload_full.play()
+		gun.reload_anim(true)
 
 	Hud.show_reload_hint("reloading")
 
@@ -149,6 +151,7 @@ func update_animation() -> void:
 func shoot() -> void:
 	if ammo > 0 and can_shoot:
 		random_sound(sound_shot01)
+		gun.shot_anim()
 		timer_shot_delay.start()
 		var bullet = Bullet.instantiate() as Area2D
 		bullet.position = $Gun/Muzzle.global_position
