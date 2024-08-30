@@ -30,6 +30,7 @@ signal player_dead
 @onready var timer_reload_partial : Timer = $Timers/ReloadPartialTimer
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var sprite_gun : Sprite2D = $Gun/GunSprite
+@onready var gun : CanvasGroup = $Gun
 @onready var timer_shot_delay : Timer = $Timers/ShotDelay
 @onready var sound_reload_partial : AudioStreamPlayer2D = $Sounds/ReloadPartialSound
 @onready var sound_reload_full : AudioStreamPlayer2D = $Sounds/ReloadFullSound
@@ -118,9 +119,11 @@ func _on_reload_timer_timeout() -> void:
 func player_death() -> void:
 	# stop physics
 	set_physics_process(false)
+	gun.set_physics_process(false)
 	collision_layer = 0
 	collision_mask = 0
 	sprite.play("idle")
+	
 	# animation
 	var tween : Tween = create_tween()
 	tween.tween_property(sprite, "modulate", Global.colour03, 0.2).set_ease(Tween.EASE_IN_OUT)
