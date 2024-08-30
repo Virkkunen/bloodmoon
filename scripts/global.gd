@@ -14,6 +14,7 @@ signal score_changed
     score = value
     emit_signal("score_changed")
 @export var player_position : Vector2
+@export var level_name : String
 
 @export var debug = true
 
