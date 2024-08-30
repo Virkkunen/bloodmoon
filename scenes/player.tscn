@@ -65,10 +65,10 @@ script = ExtResource("1_uuags")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
 process_callback = 0
-limit_left = -20
-limit_top = -20
-limit_right = 2282
-limit_bottom = 1274
+limit_left = 0
+limit_top = 0
+limit_right = 2262
+limit_bottom = 1254
 position_smoothing_enabled = true
 editor_draw_limits = true
 

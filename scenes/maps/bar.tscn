@@ -6,6 +6,7 @@
 [node name="Level01" type="Node2D"]
 
 [node name="PlayArea" type="ColorRect" parent="."]
+visible = false
 offset_right = 2262.0
 offset_bottom = 1254.0
 color = Color(1, 1, 1, 0.0117647)

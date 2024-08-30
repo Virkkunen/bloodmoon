@@ -9,6 +9,7 @@ var tilemap_walls : TileMapLayer = null
 var maps = [
 	"res://scenes/maps/half_circles.tscn",
 	"res://scenes/maps/bar.tscn",
+	"res://scenes/maps/city.tscn",
 ]
 
 func _ready() -> void:
