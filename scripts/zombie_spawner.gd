@@ -5,8 +5,8 @@ var Zombie = preload("res://scenes/zombie.tscn")
 @export var min_distance_from_center = 500
 @export var min_distance_from_edges = 40
 
-func _ready() -> void:
-	spawn_zombies(randi_range(50, 100))
+# func _ready() -> void:
+# 	spawn_zombies(randi_range(50, 100))
 
 func spawn_zombies(num_zombies: int = 10) -> void:
 	var valid_position = false

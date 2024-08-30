@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://clqlpv3d8lxvb"]
+[gd_scene load_steps=9 format=3 uid="uid://clqlpv3d8lxvb"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_bdlwq"]
 [ext_resource type="PackedScene" uid="uid://c4avsyw2xgrox" path="res://scenes/hud.tscn" id="3_i8p8l"]
 [ext_resource type="Script" path="res://scripts/zombie_spawner.gd" id="3_tepdq"]
 [ext_resource type="PackedScene" uid="uid://c8ko5ni8ykps" path="res://scenes/player.tscn" id="4_dcm4k"]
-[ext_resource type="PackedScene" uid="uid://bikhv5iu7jy8b" path="res://scenes/maps/level_01.tscn" id="6_416jl"]
 [ext_resource type="Script" path="res://scripts/wall_gen.gd" id="7_ptvcd"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_opcim"]
@@ -93,5 +92,3 @@ z_index = 5
 
 [node name="WallGen" type="Node2D" parent="."]
 script = ExtResource("7_ptvcd")
-
-[node name="Level01" parent="." instance=ExtResource("6_416jl")]

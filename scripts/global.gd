@@ -13,6 +13,7 @@ signal score_changed
   set(value):
     score = value
     emit_signal("score_changed")
+@export var player_position : Vector2
 
 @export var debug = true
 

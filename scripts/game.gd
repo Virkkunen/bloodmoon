@@ -2,17 +2,38 @@ extends Node2D
 
 @onready var player_instance : CharacterBody2D = $Player
 @onready var hud : CanvasLayer = $HUD
+@onready var zombie_spawner : Node2D = $ZombieSpawner
+
+var tilemap_walls : TileMapLayer = null
 
 func _ready() -> void:
+	load_level()
 	spawn_player()
+	zombie_spawner.spawn_zombies()
 
-# func spawn_player() -> void:
-# 	if is_instance_valid(player_instance):
-# 		player_instance.queue_free()
-# 	player_instance = player_scene.instantiate()
-# 	player_instance.position = Global.game_size / 2
-# 	add_child(player_instance)
+
+func load_level() -> void:
+	var Level : PackedScene = preload("res://scenes/maps/level_01.tscn")
+	var level = Level.instantiate()
+	add_child(level)
+
+	tilemap_walls = level.get_node("walls")
 
 func spawn_player() -> void:
 	if player_instance:
-		player_instance.position = Global.game_size / 2
+		player_instance.position = find_valid_spawn_position()
+
+func find_valid_spawn_position() -> Vector2:
+	var valid_position = false
+	var new_position : Vector2
+
+	while not valid_position:
+		new_position = gen_random_position()
+		if new_position.distance_to(tilemap_walls.local_to_map(new_position)) < 16:
+			continue
+		valid_position = true
+	return new_position
+
+
+func gen_random_position() -> Vector2:
+	return Vector2(randf_range(0, Global.game_size.x), randf_range(0, Global.game_size.y))
