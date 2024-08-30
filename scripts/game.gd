@@ -9,7 +9,7 @@ var tilemap_walls : TileMapLayer = null
 func _ready() -> void:
 	load_level()
 	spawn_player()
-	zombie_spawner.spawn_zombies()
+	zombie_spawner.spawn_zombies(50)
 
 
 func load_level() -> void:
@@ -28,12 +28,9 @@ func find_valid_spawn_position() -> Vector2:
 	var new_position : Vector2
 
 	while not valid_position:
-		new_position = gen_random_position()
-		if new_position.distance_to(tilemap_walls.local_to_map(new_position)) < 16:
-			continue
-		valid_position = true
+		new_position = Global.gen_random_position()
+		if new_position.distance_to(tilemap_walls.local_to_map(new_position)) > 320.0:
+			valid_position = true
+	
+	Global.player_position = new_position
 	return new_position
-
-
-func gen_random_position() -> Vector2:
-	return Vector2(randf_range(0, Global.game_size.x), randf_range(0, Global.game_size.y))

@@ -5,6 +5,7 @@ var Zombie = preload("res://scenes/zombie.tscn")
 @export var min_distance_from_center = 500
 @export var min_distance_from_edges = 40
 
+
 # func _ready() -> void:
 # 	spawn_zombies(randi_range(50, 100))
 
@@ -26,8 +27,8 @@ func spawn_zombies(num_zombies: int = 10) -> void:
 
 func is_valid_position(pos: Vector2) -> bool:
 	# distance to center
-	var distance_from_center = pos.distance_to(Global.game_size / 2)
-	if distance_from_center <= min_distance_from_center:
+	var distance_from_player = pos.distance_to(Global.player_position)
+	if distance_from_player <= min_distance_from_center:
 		return false
 
 	# distance to edges
@@ -40,6 +41,12 @@ func is_valid_position(pos: Vector2) -> bool:
 			distance_from_right < min_distance_from_edges or
 			distance_from_top < min_distance_from_edges or
 			distance_from_bottom < min_distance_from_edges):
+		return false
+
+	# distance to walls
+	# TODO: fix
+	var walls = get_parent().get_node("Level01").get_node("walls")
+	if pos.distance_to(walls.local_to_map(pos)) < 320.0:
 		return false
 
 	return true
