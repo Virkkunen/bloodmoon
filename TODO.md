@@ -15,3 +15,8 @@
 - [ ] fix tilemaps
     - increase scale, use more sprites
 - [ ] cleanup code
+
+
+- player has 2 area2d that are active when moving
+- when palyer shoots, spawns a point with 2 area2d, gets area collision with zombies inside radius and run functions to activate them
+- zombies have wander speed and charge speed
