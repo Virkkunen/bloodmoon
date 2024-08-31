@@ -1,0 +1,17 @@
+- [ ] Vision cones and sound
+    - map starts blank, anything on vision cone is visible, seen walls outside vision are dimmer?
+    - player makes sound on a radius depending on actions, zombies get alerted on an outer radius and turn roughly towards sound direction
+    - on inner radius zombies charge to player
+- [ ] more guns
+    - pickups, reserve mags
+- [ ] better sprites
+    - especially tilemaps
+- [ ] menu, options, help, credits, game over screens
+    - going to menu shouldn't reset the game, just pause it
+- [ ] zombies navigation
+- [ ] more sounds
+    - zombies random noises, getting hit, dying, charging, attacking
+    - player getting hit, footsteps, better shot sound
+- [ ] fix tilemaps
+    - increase scale, use more sprites
+- [ ] cleanup code
