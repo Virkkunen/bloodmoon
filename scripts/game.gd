@@ -36,22 +36,23 @@ func load_level() -> void:
 
 func spawn_player() -> void:
 	if player_instance:
-		var valid_position = false
-		var new_position : Vector2
+		# var valid_position = false
+		var spawn_position = Global.spawnable_cells.pick_random()
 
-		while not valid_position:
-			new_position = Global.gen_random_position()
+		# while not valid_position:
+		# 	new_position = Global.gen_random_position()
 
-			var position_near_wall = Global.tilemap_used_cells.any(
-				func(cell_position: Vector2) -> bool:
-					return new_position.distance_to(cell_position) < Global.tilemap_walls.tile_set.tile_size.length() / 4
-			)
+		# 	var position_near_wall = Global.spawnable_cells.any(
+		# 		func(cell_position: Vector2) -> bool:
+		# 			return new_position.distance_to(cell_position) < Global.tilemap_walls.tile_set.tile_size.length() / 4
+		# 	)
 
-			if not position_near_wall:
-				# print("player close to wall")
-				continue
+		# 	if not position_near_wall:
+		# 		# print("player close to wall")
+		# 		continue
 
-			valid_position = true
+		# 	valid_position = true
 
-		player_instance.position = new_position
-		Global.player_position = new_position
+		player_instance.position = spawn_position
+		Global.player_position = spawn_position
+		Global.spawnable_cells.erase(spawn_position)

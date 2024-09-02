@@ -17,7 +17,7 @@ signal score_changed
 @export var level_name : String
 
 @export var tilemap_walls : TileMapLayer = null
-@export var tilemap_used_cells : Array = []
+@export var spawnable_cells : Array = []
 
 @export var debug = true
 
@@ -34,7 +34,7 @@ func gen_random_position() -> Vector2:
 	return Vector2(randi_range(0, game_size.x), randi_range(0, game_size.y))
 
 # func map_used_cells_to_global() -> void:
-# 	tilemap_used_cells.clear()
+# 	spawnable_cells.clear()
 # 	var used_cells = tilemap_walls.get_used_cells()
 # 	var ground_cells = tilemap_walls.get_used_cells_by_id(-1, Vector2i(9, 0), -1)
 
@@ -42,11 +42,11 @@ func gen_random_position() -> Vector2:
 # 		# if not ground_cells.has(cell):
 # 		var tile_local_position = tilemap_walls.map_to_local(cell)
 # 		var tile_global_position = tilemap_walls.to_global(tile_local_position)
-# 		tilemap_used_cells.append(tile_global_position)
+# 		spawnable_cells.append(tile_global_position)
 
 func map_used_cells_to_global() -> void:
 	# this one will get all grass and floor tiles
-	tilemap_used_cells.clear()
+	spawnable_cells.clear()
 	var grass_cells = tilemap_walls.get_used_cells_by_id(1)
 	var floor_cells = tilemap_walls.get_used_cells_by_id(-1, Vector2i(9, 0), -1)
 	var used_cells = grass_cells + floor_cells
@@ -54,4 +54,4 @@ func map_used_cells_to_global() -> void:
 	for cell in used_cells:
 		var tile_local_position = tilemap_walls.map_to_local(cell)
 		var tile_global_position = tilemap_walls.to_global(tile_local_position)
-		tilemap_used_cells.append(tile_global_position)
+		spawnable_cells.append(tile_global_position)
