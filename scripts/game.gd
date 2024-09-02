@@ -16,12 +16,12 @@ var maps = [
 
 func _ready() -> void:
 	load_level()
-	zombie_spawner.spawn_zombies(100)
+	zombie_spawner.spawn_zombies(5)
 
 
 func load_level() -> void:
 	var random_index = randi() % maps.size()
-	var map_path = maps[random_index]
+	var map_path = maps[2]
 	var map_scene : PackedScene = load(str(map_path))
 
 	var map = map_scene.instantiate()
@@ -45,8 +45,8 @@ func spawn_player() -> void:
 					return new_position.distance_to(cell_position) < Global.tilemap_walls.tile_set.tile_size.length() / 4
 			)
 
-			if position_near_wall:
-				print("player close to wall")
+			if not position_near_wall:
+				# print("player close to wall")
 				continue
 			
 			valid_position = true

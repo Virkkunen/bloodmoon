@@ -1,7 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://doocfidw785x3"]
+[gd_scene load_steps=12 format=3 uid="uid://doocfidw785x3"]
 
 [ext_resource type="Script" path="res://scripts/zombie.gd" id="1_rl54x"]
 [ext_resource type="Texture2D" uid="uid://cqfnkkirxvj7b" path="res://assets/sprites/zombie.png" id="2_ifn4l"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_orxht"]
+radius = 101.278
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fptke"]
 size = Vector2(11, 15)
@@ -62,6 +65,13 @@ collision_mask = 15
 motion_mode = 1
 script = ExtResource("1_rl54x")
 
+[node name="Vision" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="VisionArea" type="CollisionShape2D" parent="Vision"]
+shape = SubResource("CircleShape2D_orxht")
+
 [node name="Hitbox" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_fptke")
@@ -87,8 +97,16 @@ sprite_frames = SubResource("SpriteFrames_pwd3h")
 animation = &"walk"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-navigation_layers = 2
+path_max_distance = 50.0
 avoidance_enabled = true
-radius = 40.0
+radius = 120.0
 avoidance_layers = 2
-avoidance_mask = 11
+avoidance_mask = 3
+avoidance_priority = 0.9
+debug_enabled = true
+
+[node name="NavTimer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]
+[connection signal="body_exited" from="Vision" to="." method="_on_vision_body_exited"]

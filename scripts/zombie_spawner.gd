@@ -26,7 +26,7 @@ func spawn_zombies(num_zombies: int = 10) -> void:
 					return new_position.distance_to(cell_position) < Global.tilemap_walls.tile_set.tile_size.length()
 			)
 
-			if position_near_wall:
+			if not position_near_wall:
 				# print("zombie close to wall")
 				continue
 

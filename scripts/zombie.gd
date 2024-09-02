@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 signal zombie_killed
 
-@export var speed = 20.0
+@export var speed = 40.0
 @export var max_health = 150.0
 @export var health : float :
 	get:
@@ -14,30 +14,39 @@ signal zombie_killed
 
 @export var max_damage = 25.0
 @export var damage : float
-@export var wander_time : float
+@export var vision_range_radius : float
+# @export var wander_time : float
 
+@onready var navigation_agent : NavigationAgent2D = $NavigationAgent2D
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var head : Area2D = $Head
-@onready var body : Area2D = $Body
+@onready var zombie_body : Area2D = $Body
+@onready var vision : Area2D = $Vision
+@onready var timer_navigation : Timer = $NavTimer
 
 var direction = Vector2.ZERO
-var time_since_direction_change = 0.0
+var destination : Vector2
+var player_in_vision = false
+var player : Node2D = null
 
 func _ready() -> void:
 	add_to_group("Zombies")
 	health = randf_range(max_health - 0.2 * max_health, max_health)
 	damage = randf_range(max_damage - 0.2 * max_damage, max_damage)
-	wander_time = randf_range(5, 45)
-	change_direction()
+	vision_range_radius = 120.0
 
-func _physics_process(delta: float) -> void:
-	time_since_direction_change += delta
-	if time_since_direction_change >= wander_time:
-		change_direction()
-		time_since_direction_change = 0
+	player = get_parent().get_parent().get_node("Player")
+	print(player)
 
-	velocity = direction * speed
-	move_and_slide()
+	timer_navigation.timeout.connect(_on_timer_navigation_timeout)
+
+func _physics_process(_delta: float) -> void:
+	if navigation_agent.is_navigation_finished():
+		velocity = Vector2.ZERO
+	else:
+		direction = to_local(navigation_agent.get_next_path_position()).normalized()
+		velocity = direction * speed
+		move_and_slide()
 
 	update_animation()
 
@@ -52,9 +61,6 @@ func update_animation() -> void:
 		sprite.flip_h = true
 	else:
 		sprite.flip_h = false
-
-func change_direction() -> void:
-	direction = Vector2(randf_range(-1, 1), randf_range(-1, 1)).normalized()
 
 func sprite_colour_on_damage() -> void:
 	var tween : Tween = create_tween()
@@ -76,7 +82,7 @@ func kill_zombie() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	head.collision_layer = 0
-	body.collision_layer = 0
+	zombie_body.collision_layer = 0
 	sprite.play("idle")
 	# animation
 	var tween : Tween = create_tween()
@@ -85,3 +91,24 @@ func kill_zombie() -> void:
 	tween.tween_property(sprite, "modulate", Color(0, 0, 0, 0), 0.3).set_delay(2)
 	# remove zombie
 	tween.finished.connect(self.queue_free)
+
+func nav_create_path() -> void:
+	navigation_agent.target_position = Global.player_position
+
+func nav_get_random_destination() -> void:
+	destination = Vector2(randi_range(0, Global.game_size.x), randi_range(0, Global.game_size.y))
+
+func _on_vision_body_entered(body: Node2D) -> void:
+	# collision mask is player only so no need for extra checks
+	navigation_agent.target_position = body.global_position
+	player_in_vision = true
+	timer_navigation.one_shot = false
+	timer_navigation.start()
+
+func _on_vision_body_exited(body: Node2D) -> void:
+	player_in_vision = false
+	timer_navigation.one_shot = true
+
+func _on_timer_navigation_timeout() -> void:
+	if player_in_vision:
+		navigation_agent.target_position = player.global_position
