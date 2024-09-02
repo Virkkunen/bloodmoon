@@ -97,19 +97,16 @@ sprite_frames = SubResource("SpriteFrames_pwd3h")
 animation = &"walk"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
-path_max_distance = 50.0
-avoidance_enabled = true
+path_postprocessing = 1
 radius = 120.0
 avoidance_layers = 2
 avoidance_mask = 3
-avoidance_priority = 0.9
-debug_enabled = true
 
 [node name="NavTimer" type="Timer" parent="."]
 wait_time = 0.5
 
 [node name="WanderTimer" type="Timer" parent="."]
-wait_time = 0.001
+wait_time = 0.5
 autostart = true
 
 [connection signal="area_entered" from="ZombieVision" to="." method="_on_zombie_vision_area_entered"]

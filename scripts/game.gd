@@ -10,18 +10,20 @@ var tilemap_walls : TileMapLayer = null
 
 var maps = [
 	"res://scenes/maps/half_circles.tscn",
-	"res://scenes/maps/bar.tscn",
-	"res://scenes/maps/city.tscn",
+	"res://scenes/maps/blocks.tscn",
+	"res://scenes/maps/blocks02.tscn",
+	"res://scenes/maps/rooms.tscn",
 ]
 
 func _ready() -> void:
+	Engine.max_fps = 120
 	load_level()
-	zombie_spawner.spawn_zombies(5)
+	zombie_spawner.spawn_zombies(100)
 
 
 func load_level() -> void:
 	var random_index = randi() % maps.size()
-	var map_path = maps[2]
+	var map_path = maps[random_index]
 	var map_scene : PackedScene = load(str(map_path))
 
 	var map = map_scene.instantiate()
@@ -48,7 +50,7 @@ func spawn_player() -> void:
 			if not position_near_wall:
 				# print("player close to wall")
 				continue
-			
+
 			valid_position = true
 
 		player_instance.position = new_position

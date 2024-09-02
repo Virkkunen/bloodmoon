@@ -7,6 +7,7 @@ extends CanvasLayer
 @onready var Player : CharacterBody2D = $"../Player"
 @onready var Spawner : Node2D = $"../ZombieSpawner"
 @onready var FloatingScore : PackedScene = preload("res://scenes/floating_score.tscn")
+@onready var fps_label : Label = $FPSLabel
 
 @export var animation_speed = 12
 var target_ammo_value : float
@@ -27,6 +28,8 @@ func _process(delta: float) -> void:
 		ammo_bar.value = lerp(ammo_bar.value, target_ammo_value, animation_speed * delta)
 	if health_bar.value != target_health_value:
 		health_bar.value = lerp(health_bar.value, target_health_value, animation_speed * delta)
+
+	fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
 
 func update_score() -> void:
 	score_label.text = str(Global.score)
