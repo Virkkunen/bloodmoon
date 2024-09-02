@@ -14,15 +14,15 @@ signal zombie_killed
 
 @export var max_damage = 25.0
 @export var damage : float
-@export var vision_range_radius : float
+@export var vision_radius : float
 # @export var wander_time : float
 
 @onready var navigation_agent : NavigationAgent2D = $NavigationAgent2D
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
 @onready var head : Area2D = $Head
 @onready var zombie_body : Area2D = $Body
-@onready var vision : Area2D = $Vision
 @onready var timer_navigation : Timer = $NavTimer
+@onready var timer_wander : Timer = $WanderTimer
 
 var direction = Vector2.ZERO
 var destination : Vector2
@@ -33,20 +33,15 @@ func _ready() -> void:
 	add_to_group("Zombies")
 	health = randf_range(max_health - 0.2 * max_health, max_health)
 	damage = randf_range(max_damage - 0.2 * max_damage, max_damage)
-	vision_range_radius = 120.0
-
-	player = get_parent().get_parent().get_node("Player")
-	print(player)
 
 	timer_navigation.timeout.connect(_on_timer_navigation_timeout)
+	timer_wander.timeout.connect(_on_timer_wander_timeout)
+	
 
 func _physics_process(_delta: float) -> void:
-	if navigation_agent.is_navigation_finished():
-		velocity = Vector2.ZERO
-	else:
-		direction = to_local(navigation_agent.get_next_path_position()).normalized()
-		velocity = direction * speed
-		move_and_slide()
+	direction = to_local(navigation_agent.get_next_path_position()).normalized()
+	velocity = direction * speed
+	move_and_slide()
 
 	update_animation()
 
@@ -92,23 +87,48 @@ func kill_zombie() -> void:
 	# remove zombie
 	tween.finished.connect(self.queue_free)
 
-func nav_create_path() -> void:
-	navigation_agent.target_position = Global.player_position
+func _on_zombie_vision_body_entered(body: Node2D) -> void:
+	print(body.name)
+	if body.name == "Player":
+		speed = 50
+		navigation_agent.target_position = body.global_position
+		player_in_vision = true
+		
+		timer_navigation.wait_time = 0.5
+		timer_navigation.one_shot = false
+		timer_navigation.start()
+		timer_wander.stop()
 
-func nav_get_random_destination() -> void:
-	destination = Vector2(randi_range(0, Global.game_size.x), randi_range(0, Global.game_size.y))
-
-func _on_vision_body_entered(body: Node2D) -> void:
-	# collision mask is player only so no need for extra checks
-	navigation_agent.target_position = body.global_position
-	player_in_vision = true
-	timer_navigation.one_shot = false
-	timer_navigation.start()
-
-func _on_vision_body_exited(body: Node2D) -> void:
-	player_in_vision = false
-	timer_navigation.one_shot = true
+func _on_zombie_vision_body_exited(body: Node2D) -> void:
+	if body.name == "Player":
+		player_in_vision = false
+		timer_navigation.one_shot = true
 
 func _on_timer_navigation_timeout() -> void:
 	if player_in_vision:
-		navigation_agent.target_position = player.global_position
+		navigation_agent.target_position = Global.player_position
+	else:
+		timer_wander.start()
+
+func _on_zombie_vision_area_entered(area: Area2D) -> void:
+	if area.name == "Footsteps":
+		print(area.name)
+		navigation_agent.target_position = area.global_position
+		player_in_vision = true
+		timer_navigation.one_shot = false
+		timer_navigation.wait_time = 0.8
+		timer_navigation.start()
+
+func _on_zombie_vision_area_exited(area: Area2D) -> void:
+	# print("here")
+	# player_in_vision = false
+	# timer_navigation.one_shot = true
+	pass
+
+func _on_timer_wander_timeout() -> void:
+	if not player_in_vision:
+		speed = 10
+		timer_wander.wait_time = randf_range(0.5, 4)
+		timer_wander.start()
+
+		navigation_agent.target_position = Global.gen_random_position()

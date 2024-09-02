@@ -21,6 +21,8 @@ func _on_body_entered(body: Node2D) -> void:
   # queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
+  if area.name == "ZombieVision":
+    return
   var area_body = area.get_parent()
   if area_body.is_in_group("Zombies"):
     if area.name == "Head":

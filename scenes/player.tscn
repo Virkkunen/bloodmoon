@@ -61,9 +61,9 @@ collision_mask = 3
 motion_mode = 1
 platform_wall_layers = 1
 script = ExtResource("1_uuags")
+speed = 125.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2, 2)
 process_callback = 0
 limit_left = 0
 limit_top = 0

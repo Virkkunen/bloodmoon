@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cqfnkkirxvj7b" path="res://assets/sprites/zombie.png" id="2_ifn4l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_orxht"]
-radius = 101.278
+radius = 160.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fptke"]
 size = Vector2(11, 15)
@@ -65,11 +65,11 @@ collision_mask = 15
 motion_mode = 1
 script = ExtResource("1_rl54x")
 
-[node name="Vision" type="Area2D" parent="."]
+[node name="ZombieVision" type="Area2D" parent="."]
 collision_layer = 2
-collision_mask = 4
+collision_mask = 6
 
-[node name="VisionArea" type="CollisionShape2D" parent="Vision"]
+[node name="VisionArea" type="CollisionShape2D" parent="ZombieVision"]
 shape = SubResource("CircleShape2D_orxht")
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
@@ -108,5 +108,11 @@ debug_enabled = true
 [node name="NavTimer" type="Timer" parent="."]
 wait_time = 0.5
 
-[connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]
-[connection signal="body_exited" from="Vision" to="." method="_on_vision_body_exited"]
+[node name="WanderTimer" type="Timer" parent="."]
+wait_time = 0.001
+autostart = true
+
+[connection signal="area_entered" from="ZombieVision" to="." method="_on_zombie_vision_area_entered"]
+[connection signal="area_exited" from="ZombieVision" to="." method="_on_zombie_vision_area_exited"]
+[connection signal="body_entered" from="ZombieVision" to="." method="_on_zombie_vision_body_entered"]
+[connection signal="body_exited" from="ZombieVision" to="." method="_on_zombie_vision_body_exited"]

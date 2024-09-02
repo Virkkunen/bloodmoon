@@ -37,6 +37,7 @@ signal player_dead
 @onready var sound_shot01 : AudioStreamPlayer2D = $Sounds/Shot01
 @onready var sound_shot_empty : AudioStreamPlayer2D = $Sounds/ShotEmpty
 @onready var camera : Camera2D = $Camera2D
+@onready var area_footsteps : Area2D = $Footsteps
 
 var can_be_damaged = true
 var can_shoot = true
@@ -72,6 +73,9 @@ func _physics_process(_delta: float) -> void:
 		var body := collision.get_collider()
 		if body.is_in_group("Zombies"):
 			player_hit(body.damage)
+
+	if velocity != Vector2.ZERO:
+		Global.player_position = position
 
 func get_input() -> void:
 	# movement
