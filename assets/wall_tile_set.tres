@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dn6o2oevv5qns" path="res://assets/sprites/walls.png" id="1_oqal2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_rb3jy"]
+resource_name = "walls"
 texture = ExtResource("1_oqal2")
 1:0/0 = 0
 1:0/0/z_index = 2
