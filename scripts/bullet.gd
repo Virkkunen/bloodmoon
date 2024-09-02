@@ -13,12 +13,8 @@ func _physics_process(delta: float) -> void:
   position += velocity * delta
 
 func _on_body_entered(body: Node2D) -> void:
-  print(body.name)
   if body.is_in_group("Walls") or body.name == "walls":
     queue_free()
-  #   print("hit zombie ", body.name)
-  #   body.get_hit(damage)
-  # queue_free()
 
 func _on_area_entered(area: Area2D) -> void:
   if area.name == "ZombieVision":

@@ -88,7 +88,6 @@ func kill_zombie() -> void:
 	tween.finished.connect(self.queue_free)
 
 func _on_zombie_vision_body_entered(body: Node2D) -> void:
-	print(body.name)
 	if body.name == "Player":
 		speed = 50
 		navigation_agent.target_position = body.global_position
@@ -112,18 +111,25 @@ func _on_timer_navigation_timeout() -> void:
 
 func _on_zombie_vision_area_entered(area: Area2D) -> void:
 	if area.name == "Footsteps":
-		print(area.name)
 		navigation_agent.target_position = area.global_position
 		player_in_vision = true
 		timer_navigation.one_shot = false
 		timer_navigation.wait_time = 0.8
 		timer_navigation.start()
+	if area.name == "ShotArea":
+		navigation_agent.target_position = Global.player_position
+		speed = 45
+		timer_wander.stop()
+		timer_navigation.one_shot = true
+		timer_navigation.wait_time = 2
+		timer_navigation.start()
+		
 
 func _on_zombie_vision_area_exited(area: Area2D) -> void:
+	pass	
 	# print("here")
 	# player_in_vision = false
 	# timer_navigation.one_shot = true
-	pass
 
 func _on_timer_wander_timeout() -> void:
 	if not player_in_vision:

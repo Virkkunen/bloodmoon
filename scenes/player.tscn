@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8ko5ni8ykps"]
+[gd_scene load_steps=16 format=3 uid="uid://c8ko5ni8ykps"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uuags"]
 [ext_resource type="Texture2D" uid="uid://b1he6tpyrhna8" path="res://assets/sprites/player.png" id="2_wypnn"]
@@ -52,6 +52,9 @@ animations = [{
 "name": &"walk",
 "speed": 5.0
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pug33"]
+radius = 256.0
 
 [node name="Player" type="CharacterBody2D"]
 position = Vector2(456, 248)
@@ -132,5 +135,14 @@ area_mask = 4
 stream = ExtResource("8_gm0x1")
 volume_db = 6.0
 area_mask = 4
+
+[node name="ShotArea" type="Area2D" parent="."]
+collision_layer = 64
+collision_mask = 0
+monitoring = false
+monitorable = false
+
+[node name="ShotHitbox" type="CollisionShape2D" parent="ShotArea"]
+shape = SubResource("CircleShape2D_pug33")
 
 [connection signal="health_changed" from="." to="." method="_on_health_changed"]

@@ -21,7 +21,6 @@ func _ready() -> void:
 	Player.health_changed.connect(update_health)
 	Player.player_dead.connect(_on_player_dead)
 	Global.score_changed.connect(update_score)
-	print(score_label.global_position)
 
 func _process(delta: float) -> void:
 	if ammo_bar.value != target_ammo_value:

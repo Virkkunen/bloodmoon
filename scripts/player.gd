@@ -37,7 +37,7 @@ signal player_dead
 @onready var sound_shot01 : AudioStreamPlayer2D = $Sounds/Shot01
 @onready var sound_shot_empty : AudioStreamPlayer2D = $Sounds/ShotEmpty
 @onready var camera : Camera2D = $Camera2D
-@onready var area_footsteps : Area2D = $Footsteps
+@onready var area_shot : Area2D = $ShotArea
 
 var can_be_damaged = true
 var can_shoot = true
@@ -166,6 +166,12 @@ func shoot() -> void:
 		get_parent().add_child(bullet)
 		ammo -= 1
 		can_shoot = false
+
+		area_shot.monitorable = true
+		area_shot.monitoring = true
+		await get_tree().create_timer(0.1).timeout
+		area_shot.monitorable = false
+		area_shot.monitoring = false
 
 	elif ammo <= 0 and not sound_shot_empty.playing and can_reload:
 		sound_shot_empty.play()
