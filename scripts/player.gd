@@ -138,7 +138,6 @@ func player_death() -> void:
 	tween.tween_property(sprite, "modulate", Global.colour03, 0.2).set_ease(Tween.EASE_IN_OUT)
 	tween.parallel().tween_property(sprite, "rotation_degrees", 90, 0.1).set_ease(Tween.EASE_IN)
 	tween.tween_property(sprite, "modulate", Color(0, 0, 0, 0), 0.3).set_delay(2)
-	# tween.parallel().tween_property(camera, "zoom", Vector2(1, 1), 0.6).set_delay(0.5).set_ease(Tween.EASE_IN)
 	# remove
 	tween.finished.connect(self.queue_free)
 	emit_signal("player_dead")

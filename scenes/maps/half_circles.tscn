@@ -7,7 +7,7 @@ vertices = PackedVector2Array(2246, 1238, 16, 1238, 16, 16, 2246, 16)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(0, 0, 0, 1254, 2262, 1254, 2262, 0)])
 cell_size = 16.0
-border_size = 32.0
+border_size = 16.0
 agent_radius = 16.0
 
 [node name="Level01" type="Node2D"]

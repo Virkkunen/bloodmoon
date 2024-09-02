@@ -19,7 +19,7 @@ signal score_changed
 @export var tilemap_walls : TileMapLayer = null
 @export var spawnable_cells : Array = []
 
-@export var debug = true
+@export var debug = false
 
 var screen_size : Vector2
 var screen_center : Vector2
@@ -32,17 +32,6 @@ func _ready() -> void:
 
 func gen_random_position() -> Vector2:
 	return Vector2(randi_range(0, game_size.x), randi_range(0, game_size.y))
-
-# func map_used_cells_to_global() -> void:
-# 	spawnable_cells.clear()
-# 	var used_cells = tilemap_walls.get_used_cells()
-# 	var ground_cells = tilemap_walls.get_used_cells_by_id(-1, Vector2i(9, 0), -1)
-
-# 	for cell in used_cells:
-# 		# if not ground_cells.has(cell):
-# 		var tile_local_position = tilemap_walls.map_to_local(cell)
-# 		var tile_global_position = tilemap_walls.to_global(tile_local_position)
-# 		spawnable_cells.append(tile_global_position)
 
 func map_used_cells_to_global() -> void:
 	# this one will get all grass and floor tiles

@@ -95,9 +95,9 @@ offset_bottom = 183.0
 text = "health"
 
 [node name="FPSLabel" type="Label" parent="."]
-offset_left = 1832.0
+offset_left = 1824.0
 offset_top = 8.0
-offset_right = 1912.0
+offset_right = 1904.0
 offset_bottom = 31.0
 theme = ExtResource("2_vfj5k")
 theme_override_font_sizes/font_size = 18

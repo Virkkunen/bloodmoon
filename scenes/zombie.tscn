@@ -97,6 +97,7 @@ sprite_frames = SubResource("SpriteFrames_pwd3h")
 animation = &"walk"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_max_distance = 1000.0
 path_postprocessing = 1
 radius = 120.0
 avoidance_layers = 2

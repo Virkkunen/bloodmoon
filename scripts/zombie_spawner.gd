@@ -15,25 +15,14 @@ func spawn_zombies(num_zombies: int = 10) -> void:
 
 		while not valid_position:
 			new_position = Global.spawnable_cells.pick_random()
-			# first check if near player
 			if new_position.distance_to(Global.player_position) < min_distance_from_player:
 				# print("zombie close to player")
 				continue # goto while
-			# now check walls with a neat lambda function
-			# I miss javascript
-			# var position_near_wall = Global.spawnable_cells.any(
-			# 	func(cell_position: Vector2) -> bool:
-			# 		return new_position.distance_to(cell_position) < Global.tilemap_walls.tile_set.tile_size.length()
-			# )
-
-			# if not position_near_wall:
-			# 	# print("zombie close to wall")
-			# 	continue
 
 			valid_position = true
 
 		zombie.position = new_position
 		zombie.name = "Zombie " + str(i)
 		Global.zombies.append(zombie)
-		add_child(zombie)
 		Global.spawnable_cells.erase(new_position)
+		add_child(zombie)
