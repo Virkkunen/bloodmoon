@@ -36,8 +36,10 @@ func gen_random_position() -> Vector2:
 func map_used_cells_to_global() -> void:
   tilemap_used_cells.clear()
   var used_cells = tilemap_walls.get_used_cells()
+  var ground_cells = tilemap_walls.get_used_cells_by_id(-1, Vector2i(9, 0), -1)
 
   for cell in used_cells:
-    var tile_local_position = tilemap_walls.map_to_local(cell)
-    var tile_global_position = tilemap_walls.to_global(tile_local_position)
-    tilemap_used_cells.append(tile_global_position)
+    if not ground_cells.has(cell):
+      var tile_local_position = tilemap_walls.map_to_local(cell)
+      var tile_global_position = tilemap_walls.to_global(tile_local_position)
+      tilemap_used_cells.append(tile_global_position)

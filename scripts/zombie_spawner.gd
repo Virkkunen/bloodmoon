@@ -17,7 +17,7 @@ func spawn_zombies(num_zombies: int = 10) -> void:
 			new_position = Global.gen_random_position()
 			# first check if near player
 			if new_position.distance_to(Global.player_position) < min_distance_from_player:
-				print("zombie close to player")
+				# print("zombie close to player")
 				continue # goto while
 			# now check walls with a neat lambda function
 			# I miss javascript
@@ -27,7 +27,7 @@ func spawn_zombies(num_zombies: int = 10) -> void:
 			)
 
 			if position_near_wall:
-				print("zombie close to wall")
+				# print("zombie close to wall")
 				continue
 
 			valid_position = true
