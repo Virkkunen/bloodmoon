@@ -99,9 +99,11 @@ animation = &"walk"
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_max_distance = 1000.0
 path_postprocessing = 1
+simplify_path = true
 radius = 120.0
 avoidance_layers = 2
 avoidance_mask = 3
+debug_enabled = true
 
 [node name="NavTimer" type="Timer" parent="."]
 wait_time = 0.5

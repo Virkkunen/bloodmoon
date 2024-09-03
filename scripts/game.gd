@@ -23,12 +23,12 @@ func _ready() -> void:
 
 func load_level() -> void:
 	var random_index = randi() % maps.size()
-	var map_path = maps[random_index]
+	var map_path = maps[1]
 	var map_scene : PackedScene = load(str(map_path))
 
 	var map = map_scene.instantiate()
 	add_child(map)
-	Global.tilemap_walls = map.get_node("walls")
+	Global.tilemap = map.get_node("Tiles")
 	Global.map_used_cells_to_global()
 
 	spawn_player()
