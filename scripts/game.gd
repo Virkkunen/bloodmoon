@@ -18,12 +18,12 @@ var maps = [
 func _ready() -> void:
 	Engine.max_fps = 120
 	load_level()
-	zombie_spawner.spawn_zombies(10)
+	zombie_spawner.spawn_zombies(randi_range(25, 100))
 
 
 func load_level() -> void:
 	var random_index = randi() % maps.size()
-	var map_path = maps[1]
+	var map_path = maps[random_index]
 	var map_scene : PackedScene = load(str(map_path))
 
 	var map = map_scene.instantiate()

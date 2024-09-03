@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=29 format=3 uid="uid://c4fh71nv66agj"]
+[gd_resource type="TileSet" load_steps=30 format=3 uid="uid://c4fh71nv66agj"]
 
 [ext_resource type="Texture2D" uid="uid://cmaw8fb4yb87l" path="res://assets/sprites/tileset.png" id="1_3cqsy"]
 
@@ -122,7 +122,7 @@ texture = ExtResource("1_3cqsy")
 3:4/0 = 0
 3:4/0/z_index = 1
 3:4/0/terrain_set = 0
-3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -3, -8, -3, -3, -8, -3)
+3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -3, -8, -4, -4, -8, -3)
 3:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_iuxuq")
 3:4/0/metadata/_better_terrain = {
 8: [2],
@@ -143,7 +143,7 @@ texture = ExtResource("1_3cqsy")
 5:4/0 = 0
 5:4/0/z_index = 1
 5:4/0/terrain_set = 0
-5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, -8, 8, -8, 8, -3, 3, -3)
+5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, -8, 8, -8, 8, -3, 4, -4)
 5:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_u61wk")
 5:4/0/metadata/_better_terrain = {
 0: [2],
@@ -164,7 +164,7 @@ texture = ExtResource("1_3cqsy")
 6:5/0 = 0
 6:5/0/z_index = 1
 6:5/0/terrain_set = 0
-6:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, 3, 8, 3, 8, 8, 3, 8)
+6:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, 4, 8, 3, 8, 8, 3, 8)
 6:5/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_c6n7f")
 6:5/0/metadata/_better_terrain = {
 0: [2],
@@ -188,9 +188,7 @@ texture = ExtResource("1_3cqsy")
 2:6/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_yp5r6")
 2:6/0/metadata/_better_terrain = {
 0: [1, 2],
-3: [0],
 4: [0],
-7: [0],
 8: [1, 2],
 12: [1, 2],
 "type": 1
@@ -252,7 +250,7 @@ texture = ExtResource("1_3cqsy")
 4:5/0 = 0
 4:5/0/z_index = 1
 4:5/0/terrain_set = 0
-4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 3, -3, 3, -3, 8, -8, 8)
+4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 3, -4, 4, -3, 8, -8, 8)
 4:5/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_17n1e")
 4:5/0/metadata/_better_terrain = {
 4: [2],
@@ -308,9 +306,7 @@ texture = ExtResource("1_3cqsy")
 3:6/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_2q68y")
 3:6/0/metadata/_better_terrain = {
 0: [1, 2],
-3: [0],
 4: [0],
-7: [0],
 8: [1, 2],
 12: [1, 2],
 "type": 1
@@ -537,40 +533,234 @@ texture = ExtResource("1_3cqsy")
 8:4/0 = 0
 8:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_omllw")
 
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_gw83b"]
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ybefk"]
 resource_name = "walls02"
 texture = ExtResource("1_3cqsy")
 3:7/0 = 0
+3:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:7/0/metadata/_better_terrain = {
+8: [3],
+12: [3],
+"type": 3
+}
 2:7/0 = 0
+2:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:7/0/metadata/_better_terrain = {
+4: [3],
+12: [3],
+"type": 3
+}
 1:7/0 = 0
+1:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+1:7/0/metadata/_better_terrain = {
+8: [3],
+"type": 3
+}
 0:7/0 = 0
+0:7/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:7/0/metadata/_better_terrain = {
+4: [3],
+12: [3],
+"type": 3
+}
 4:6/0 = 0
+4:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:6/0/metadata/_better_terrain = {
+0: [3],
+4: [3],
+8: [3],
+12: [3],
+"type": 3
+}
 5:6/0 = 0
+5:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+5:6/0/metadata/_better_terrain = {
+0: [3],
+4: [0],
+"type": 3
+}
 6:6/0 = 0
+6:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:6/0/metadata/_better_terrain = {
+0: [3],
+8: [3],
+"type": 3
+}
 7:6/0 = 0
+7:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+7:6/0/metadata/_better_terrain = {
+4: [0],
+12: [3],
+"type": 3
+}
 8:6/0 = 0
+8:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:6/0/metadata/_better_terrain = {
+0: [3],
+8: [3],
+"type": 3
+}
 6:3/0 = 0
+6:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:3/0/metadata/_better_terrain = {
+0: [3],
+4: [3],
+"type": 3
+}
 8:2/0 = 0
+8:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+8:2/0/metadata/_better_terrain = {
+4: [3],
+8: [3],
+12: [3],
+"type": 3
+}
 7:1/0 = 0
+7:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+7:1/0/metadata/_better_terrain = {
+0: [3],
+4: [3],
+"type": 3
+}
 6:1/0 = 0
+6:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+6:1/0/metadata/_better_terrain = {
+4: [3],
+12: [3],
+"type": 3
+}
 5:1/0 = 0
+5:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+5:1/0/metadata/_better_terrain = {
+4: [3],
+12: [3],
+"type": 3
+}
 4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:1/0/metadata/_better_terrain = {
+4: [3],
+12: [3],
+"type": 3
+}
 3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:1/0/metadata/_better_terrain = {
+4: [3],
+12: [3],
+"type": 3
+}
 2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:1/0/metadata/_better_terrain = {
+0: [3],
+4: [3],
+"type": 3
+}
 1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+1:1/0/metadata/_better_terrain = {
+0: [3],
+4: [0],
+12: [3],
+"type": 3
+}
 0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+0:1/0/metadata/_better_terrain = {
+4: [0],
+8: [3],
+12: [3],
+"type": 3
+}
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:0/0/metadata/_better_terrain = {
+4: [3],
+"type": 3
+}
 1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+1:0/0/metadata/_better_terrain = {
+0: [3],
+4: [0],
+8: [3],
+12: [3],
+"type": 3
+}
 2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+2:0/0/metadata/_better_terrain = {
+4: [3],
+8: [3],
+"type": 3
+}
 3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+3:0/0/metadata/_better_terrain = {
+0: [3],
+4: [3],
+"type": 3
+}
 4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+4:0/0/metadata/_better_terrain = {
+0: [3],
+4: [3],
+8: [3],
+"type": 3
+}
 5:0/0 = 0
+5:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+5:0/0/metadata/_better_terrain = {
+4: [0],
+8: [3],
+12: [3],
+"type": 3
+}
 6:0/0 = 0
+6:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+6:0/0/metadata/_better_terrain = {
+0: [3],
+4: [0],
+8: [3],
+12: [3],
+"type": 3
+}
 7:0/0 = 0
+7:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+7:0/0/metadata/_better_terrain = {
+4: [0],
+8: [3],
+"type": 3
+}
 8:0/0 = 0
+8:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+8:0/0/metadata/_better_terrain = {
+0: [3],
+4: [0],
+"type": 3
+}
 5:3/0 = 0
+5:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+5:3/0/metadata/_better_terrain = {
+4: [0],
+8: [3],
+12: [3],
+"type": 3
+}
 4:3/0 = 0
+4:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
+4:3/0/metadata/_better_terrain = {
+0: [3],
+4: [0],
+12: [3],
+"type": 3
+}
 4:7/0 = 0
+4:7/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_gw83b")
 
 [resource]
 physics_layer_0/collision_layer = 1
@@ -599,6 +789,9 @@ metadata/_better_terrain = {
 }], ["border_walls", Color(0.801666, 0.941406, 0, 1), 0, [], {
 "coord": Vector2i(1, 5),
 "source_id": 0
+}], ["walls_02", Color(0.617982, 0.518953, 0.897676, 1), 0, [], {
+"coord": Vector2i(0, 0),
+"source_id": 2
 }]],
 "version": "0.2"
 }
