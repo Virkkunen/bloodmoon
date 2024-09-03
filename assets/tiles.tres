@@ -89,6 +89,7 @@ resource_name = "walls"
 texture = ExtResource("1_3cqsy")
 0:4/0 = 0
 0:4/0/z_index = 1
+0:4/0/y_sort_origin = 1
 0:4/0/terrain_set = 0
 0:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 3, 8, 3, 8, 8, -8, 8)
 0:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_vbfbu")
@@ -100,6 +101,7 @@ texture = ExtResource("1_3cqsy")
 }
 1:4/0 = 0
 1:4/0/z_index = 1
+1:4/0/y_sort_origin = 1
 1:4/0/terrain_set = 0
 1:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:4/0/metadata/_better_terrain = {
@@ -110,6 +112,7 @@ texture = ExtResource("1_3cqsy")
 }
 2:4/0 = 0
 2:4/0/z_index = 1
+2:4/0/y_sort_origin = 1
 2:4/0/terrain_set = 0
 2:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -3, -8, -3, 8, -8, 8)
 2:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_kofkf")
@@ -121,6 +124,7 @@ texture = ExtResource("1_3cqsy")
 }
 3:4/0 = 0
 3:4/0/z_index = 1
+3:4/0/y_sort_origin = 1
 3:4/0/terrain_set = 0
 3:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -3, -8, -4, -4, -8, -3)
 3:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_iuxuq")
@@ -131,6 +135,7 @@ texture = ExtResource("1_3cqsy")
 }
 4:4/0 = 0
 4:4/0/z_index = 1
+4:4/0/y_sort_origin = 1
 4:4/0/terrain_set = 0
 4:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, 3, 8, 3, -3, -8, -3)
 4:4/0/metadata/_better_terrain = {
@@ -142,6 +147,7 @@ texture = ExtResource("1_3cqsy")
 }
 5:4/0 = 0
 5:4/0/z_index = 1
+5:4/0/y_sort_origin = 1
 5:4/0/terrain_set = 0
 5:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, -8, 8, -8, 8, -3, 4, -4)
 5:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_u61wk")
@@ -152,6 +158,7 @@ texture = ExtResource("1_3cqsy")
 }
 6:4/0 = 0
 6:4/0/z_index = 1
+6:4/0/y_sort_origin = 1
 6:4/0/terrain_set = 0
 6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3, -8, -3)
 6:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_8uesp")
@@ -163,6 +170,7 @@ texture = ExtResource("1_3cqsy")
 }
 6:5/0 = 0
 6:5/0/z_index = 1
+6:5/0/y_sort_origin = 1
 6:5/0/terrain_set = 0
 6:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(4, 4, 8, 3, 8, 8, 3, 8)
 6:5/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_c6n7f")
@@ -173,6 +181,7 @@ texture = ExtResource("1_3cqsy")
 }
 7:5/0 = 0
 7:5/0/z_index = 1
+7:5/0/y_sort_origin = 1
 7:5/0/terrain_set = 0
 7:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:5/0/metadata/_better_terrain = {
@@ -183,6 +192,7 @@ texture = ExtResource("1_3cqsy")
 }
 2:6/0 = 0
 2:6/0/z_index = 1
+2:6/0/y_sort_origin = 1
 2:6/0/terrain_set = 0
 2:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
 2:6/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_yp5r6")
@@ -195,6 +205,7 @@ texture = ExtResource("1_3cqsy")
 }
 1:6/0 = 0
 1:6/0/z_index = 1
+1:6/0/y_sort_origin = 1
 1:6/0/terrain_set = 0
 1:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:6/0/metadata/_better_terrain = {
@@ -205,6 +216,7 @@ texture = ExtResource("1_3cqsy")
 }
 0:6/0 = 0
 0:6/0/z_index = 1
+0:6/0/y_sort_origin = 1
 0:6/0/terrain_set = 0
 0:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, -8, 8, -8, 8, 8, 3, 8)
 0:6/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_dy0hg")
@@ -216,6 +228,7 @@ texture = ExtResource("1_3cqsy")
 }
 0:5/0 = 0
 0:5/0/z_index = 1
+0:5/0/y_sort_origin = 1
 0:5/0/terrain_set = 0
 0:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 3, 3, 3, 3, -8, 8, -8, 8, 8, -8, 8)
 0:5/0/metadata/_better_terrain = {
@@ -227,6 +240,7 @@ texture = ExtResource("1_3cqsy")
 }
 1:5/0 = 0
 1:5/0/z_index = 1
+1:5/0/y_sort_origin = 1
 1:5/0/terrain_set = 0
 1:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -3, -8, -3, 3, 8, 3, 8, 8, -8, 8)
 1:5/0/metadata/_better_terrain = {
@@ -238,6 +252,7 @@ texture = ExtResource("1_3cqsy")
 }
 3:5/0 = 0
 3:5/0/z_index = 1
+3:5/0/y_sort_origin = 1
 3:5/0/terrain_set = 0
 3:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(3, -8, 8, -8, 8, 8, 3, 8)
 3:5/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_40p0j")
@@ -249,6 +264,7 @@ texture = ExtResource("1_3cqsy")
 }
 4:5/0 = 0
 4:5/0/z_index = 1
+4:5/0/y_sort_origin = 1
 4:5/0/terrain_set = 0
 4:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 3, -4, 4, -3, 8, -8, 8)
 4:5/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_17n1e")
@@ -259,6 +275,7 @@ texture = ExtResource("1_3cqsy")
 }
 5:5/0 = 0
 5:5/0/z_index = 1
+5:5/0/y_sort_origin = 1
 5:5/0/terrain_set = 0
 5:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, 3, 8, 3, 8, 8, -8, 8)
 5:5/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_mox74")
@@ -269,6 +286,7 @@ texture = ExtResource("1_3cqsy")
 "type": 2
 }
 7:3/0 = 0
+7:3/0/y_sort_origin = 1
 7:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3, -3, -3, -3, 8, -8, 8)
 7:3/0/metadata/_better_terrain = {
 0: [2],
@@ -278,6 +296,7 @@ texture = ExtResource("1_3cqsy")
 "type": 2
 }
 8:3/0 = 0
+8:3/0/y_sort_origin = 1
 8:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 8:3/0/metadata/_better_terrain = {
 0: [1],
@@ -286,6 +305,7 @@ texture = ExtResource("1_3cqsy")
 "type": 2
 }
 8:5/0 = 0
+8:5/0/y_sort_origin = 1
 8:5/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, -3, -8, -3, 8, -8, 8)
 8:5/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_p5c6f")
 8:5/0/metadata/_better_terrain = {
@@ -294,6 +314,7 @@ texture = ExtResource("1_3cqsy")
 "type": 2
 }
 7:4/0 = 0
+7:4/0/y_sort_origin = 1
 7:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -3, -8, -3)
 7:4/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_cyyot")
 7:4/0/metadata/_better_terrain = {
@@ -302,6 +323,7 @@ texture = ExtResource("1_3cqsy")
 "type": 2
 }
 3:6/0 = 0
+3:6/0/y_sort_origin = 1
 3:6/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, -1, -8, -1)
 3:6/0/navigation_layer_0/polygon = SubResource("NavigationPolygon_2q68y")
 3:6/0/metadata/_better_terrain = {
@@ -312,6 +334,7 @@ texture = ExtResource("1_3cqsy")
 "type": 1
 }
 2:3/0 = 0
+2:3/0/y_sort_origin = 1
 2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:3/0/metadata/_better_terrain = {
 0: [2],
@@ -321,6 +344,7 @@ texture = ExtResource("1_3cqsy")
 "type": 2
 }
 3:3/0 = 0
+3:3/0/y_sort_origin = 1
 3:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:3/0/metadata/_better_terrain = {
 0: [1],
@@ -330,6 +354,7 @@ texture = ExtResource("1_3cqsy")
 "type": 2
 }
 1:3/0 = 0
+1:3/0/y_sort_origin = 1
 1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:3/0/metadata/_better_terrain = {
 0: [1, 2],

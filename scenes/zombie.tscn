@@ -98,10 +98,12 @@ sprite_frames = SubResource("SpriteFrames_pwd3h")
 animation = &"walk"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 12.0
+target_desired_distance = 12.0
 path_postprocessing = 1
 simplify_path = true
 avoidance_enabled = true
-radius = 120.0
+radius = 20.0
 avoidance_layers = 2
 avoidance_mask = 3
 
@@ -116,3 +118,4 @@ autostart = true
 [connection signal="area_exited" from="ZombieVision" to="." method="_on_zombie_vision_area_exited"]
 [connection signal="body_entered" from="ZombieVision" to="." method="_on_zombie_vision_body_entered"]
 [connection signal="body_exited" from="ZombieVision" to="." method="_on_zombie_vision_body_exited"]
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]

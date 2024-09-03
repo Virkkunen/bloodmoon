@@ -28,7 +28,8 @@ func load_level() -> void:
 
 	var map = map_scene.instantiate()
 	add_child(map)
-	Global.tilemap = map.get_node("Tiles")
+	# Global.tilemap_ground = map.get_node("Ground")
+	Global.tilemap_ground = map.get_node("Tiles")
 	Global.map_used_cells_to_global()
 
 	spawn_player()

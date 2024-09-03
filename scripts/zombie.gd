@@ -25,7 +25,8 @@ signal zombie_killed
 @onready var timer_wander : Timer = $WanderTimer
 
 var direction = Vector2.ZERO
-var destination : Vector2
+var current_position : Vector2
+var next_position : Vector2
 var player_in_vision = false
 var player : Node2D = null
 
@@ -39,23 +40,26 @@ func _ready() -> void:
 	
 
 func _physics_process(_delta: float) -> void:
-	direction = to_local(navigation_agent.get_next_path_position()).normalized()
-	velocity = direction * speed
+	# direction = to_local(navigation_agent.get_next_path_position()).normalized()
+	# velocity = direction * speed
+	if navigation_agent.is_navigation_finished():
+		return
+
+	current_position = global_position
+	next_position = navigation_agent.get_next_path_position()
+	var new_velocity = current_position.direction_to(next_position) * speed
+
+	if navigation_agent.avoidance_enabled:
+		navigation_agent.set_velocity(new_velocity)
+	else:
+		_on_navigation_agent_2d_velocity_computed(new_velocity)
+
 	move_and_slide()
 
-	update_animation()
+	sprite.play("walk") if velocity.length() > 0 else sprite.play("idle")
+	sprite.flip_h = true if velocity.x < 0 else false
 
-func update_animation() -> void:
-	if velocity.length() > 0:
-		sprite.play("walk")
-	else:
-		sprite.play("idle")
-
-	# update_flip()
-	if velocity.x < 0:
-		sprite.flip_h = true
-	else:
-		sprite.flip_h = false
+	
 
 func sprite_colour_on_damage() -> void:
 	var tween : Tween = create_tween()
@@ -110,22 +114,16 @@ func _on_timer_navigation_timeout() -> void:
 		timer_wander.start()
 
 func _on_zombie_vision_area_entered(area: Area2D) -> void:
-	if area.name == "Footsteps":
-		navigation_agent.target_position = area.global_position
-		player_in_vision = true
-		timer_navigation.one_shot = false
-		timer_navigation.wait_time = 0.8
-		timer_navigation.start()
-	if area.name == "ShotArea":
+	if area.name == "ShotArea" and not player_in_vision:
 		navigation_agent.target_position = Global.player_position
-		speed = 45
+		speed = 40
 		timer_wander.stop()
 		timer_navigation.one_shot = true
 		timer_navigation.wait_time = 2
 		timer_navigation.start()
 		
 
-func _on_zombie_vision_area_exited(area: Area2D) -> void:
+func _on_zombie_vision_area_exited(_area: Area2D) -> void:
 	pass	
 	# print("here")
 	# player_in_vision = false
@@ -134,7 +132,11 @@ func _on_zombie_vision_area_exited(area: Area2D) -> void:
 func _on_timer_wander_timeout() -> void:
 	if not player_in_vision:
 		speed = 10
-		timer_wander.wait_time = randf_range(0.5, 4)
+		timer_wander.wait_time = randf_range(1, 4)
 		timer_wander.start()
 
 		navigation_agent.target_position = Global.gen_random_position()
+
+func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
+	velocity = safe_velocity
+	pass

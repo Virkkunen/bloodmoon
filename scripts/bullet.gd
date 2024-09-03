@@ -30,5 +30,6 @@ func _on_area_entered(area: Area2D) -> void:
       area_body.get_hit(damage)
       if Global.debug:
         print("Hit ", area_body.name, " on ", area.name, ", damage: ", damage)
+  
   queue_free()
 

@@ -143,16 +143,10 @@ func player_death() -> void:
 	emit_signal("player_dead")
 
 func update_animation() -> void:
-	if velocity.length() > 0:
-		sprite.play("walk")
-	else:
-		sprite.play("idle")
-
+	sprite.play("walk") if velocity.length() > 0 else sprite.play("idle")
+	
 	var cursor_position = get_global_mouse_position()
-	if cursor_position.x > position.x:
-		sprite.flip_h = false
-	elif cursor_position.x < position.x:
-		sprite.flip_h = true
+	sprite.flip_h = true if cursor_position.x < position.x else false
 
 func shoot() -> void:
 	if ammo > 0 and can_shoot:
@@ -176,8 +170,7 @@ func shoot() -> void:
 		sound_shot_empty.play()
 
 func _on_shot_delay_timeout() -> void:
-	if ammo > 0 and not can_shoot:
-		can_shoot = true
+	can_shoot = true if ammo > 0 and not can_shoot else false
 
 func get_muzzle_direction(bullet: Area2D) -> Vector2:
 	var cursor_position = get_global_mouse_position()
