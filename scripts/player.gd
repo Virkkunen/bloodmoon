@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+enum States {IDLE, WALKING, DEATH, SHOOTING, RELOADING}
+
 signal ammo_changed
 signal health_changed
 signal player_dead
@@ -23,6 +25,9 @@ signal player_dead
 		ammo = value
 		emit_signal("ammo_changed", ammo)
 
+@export var state : States = States.IDLE : set = set_state
+@export var gun_state : States = States.IDLE : set = set_gun_state
+
 # @onready var hitbox : CollisionPolygon2D = $Hitbox
 @onready var Hud : CanvasLayer = $"../HUD"
 @onready var timer_damage_cooldown : Timer = $Timers/DamageCooldown
@@ -40,8 +45,6 @@ signal player_dead
 @onready var area_shot : Area2D = $ShotArea
 
 var can_be_damaged = true
-var can_shoot = true
-var can_reload = true
 var Bullet : PackedScene = preload("res://scenes/bullet.tscn")
 
 func _ready() -> void:
@@ -61,8 +64,8 @@ func _physics_process(_delta: float) -> void:
 
 	if Global.debug:
 		$"../HUD/DEBUG".visible = true
-		$"../HUD/DEBUG/can_reload".text = "can_reload: " + str(can_reload)
-		$"../HUD/DEBUG/can_shoot".text = "can_shoot: " + str(can_shoot)
+		$"../HUD/DEBUG/can_reload".text = "STATE: " + str(state)
+		$"../HUD/DEBUG/can_shoot".text = "GUN STATE: " + str(gun_state)
 		$"../HUD/DEBUG/reload_partial".text = "reload_partial: " + str(timer_reload_partial.time_left)
 		$"../HUD/DEBUG/reload_full".text = "reload_full: " + str(timer_reload_full.time_left)
 		$"../HUD/DEBUG/health".text = "health: " + str(health)
@@ -81,6 +84,10 @@ func get_input() -> void:
 	# movement
 	var input_dir = Input.get_vector("left", "right", "up", "down")
 	velocity = input_dir * speed
+	if velocity.length() > 0:
+		set_state(States.WALKING)
+	else:
+		set_state(States.IDLE)
 
 	# shooting
 	if Input.is_action_just_pressed("shoot"):
@@ -89,6 +96,18 @@ func get_input() -> void:
 	if Input.is_action_just_pressed("reload"):
 		reload()
 
+func set_state(new_state: States) -> void:
+	# var previous_state = state
+	state = new_state
+
+	if state in [States.WALKING]:
+		sprite.play("walk")
+	elif state == States.IDLE:
+		sprite.play("idle")
+
+func set_gun_state(new_state: States) -> void:
+	# var previous_state = gun_state
+	gun_state = new_state
 
 func player_hit(damage: float) -> void:
 	if can_be_damaged:
@@ -101,11 +120,13 @@ func _on_damage_cooldown_timeout() -> void:
 	can_be_damaged = true
 
 func reload() -> void:
-	if not can_reload:
+	if gun_state == States.SHOOTING:
 		return
 
-	can_reload = false
-	can_shoot = false
+	set_gun_state(States.RELOADING)
+
+	# can_reload = false
+	# can_shoot = false
 	timer_shot_delay.stop()
 
 	if ammo > 0:
@@ -120,8 +141,9 @@ func reload() -> void:
 	Hud.show_reload_hint("reloading")
 
 func _on_reload_timer_timeout() -> void:
-	can_shoot = true
-	can_reload = true
+	set_gun_state(States.IDLE)
+	# can_shoot = true
+	# can_reload = true
 	ammo = max_ammo
 	Hud.ammo_bar.indeterminate = false
 
@@ -143,13 +165,14 @@ func player_death() -> void:
 	emit_signal("player_dead")
 
 func update_animation() -> void:
-	sprite.play("walk") if velocity.length() > 0 else sprite.play("idle")
+	# sprite.play("walk") if velocity.length() > 0 else sprite.play("idle")
 	
 	var cursor_position = get_global_mouse_position()
 	sprite.flip_h = true if cursor_position.x < position.x else false
 
 func shoot() -> void:
-	if ammo > 0 and can_shoot:
+	if ammo > 0 and gun_state == States.IDLE:
+		set_gun_state(States.SHOOTING)
 		random_sound(sound_shot01)
 		gun.shot_anim()
 		timer_shot_delay.start()
@@ -158,7 +181,6 @@ func shoot() -> void:
 		bullet.velocity = get_muzzle_direction(bullet) * bullet.speed
 		get_parent().add_child(bullet)
 		ammo -= 1
-		can_shoot = false
 
 		area_shot.monitorable = true
 		area_shot.monitoring = true
@@ -166,11 +188,13 @@ func shoot() -> void:
 		area_shot.monitorable = false
 		area_shot.monitoring = false
 
-	elif ammo <= 0 and not sound_shot_empty.playing and can_reload:
+	elif ammo <= 0 and not sound_shot_empty.playing and gun_state == States.IDLE:
 		sound_shot_empty.play()
 
 func _on_shot_delay_timeout() -> void:
-	can_shoot = true if ammo > 0 and not can_shoot else false
+	# can_shoot = true if ammo > 0 and not can_shoot else false
+	if ammo >= 0:
+		set_gun_state(States.IDLE)
 
 func get_muzzle_direction(bullet: Area2D) -> Vector2:
 	var cursor_position = get_global_mouse_position()

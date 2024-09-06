@@ -20,7 +20,7 @@ signal score_changed
 @export var tilemap_walls : TileMapLayer = null
 @export var spawnable_cells : Array = []
 
-@export var debug = false
+@export var debug = true
 
 var screen_size : Vector2
 var screen_center : Vector2

@@ -98,7 +98,7 @@ position = Vector2(9, -1)
 [node name="Timers" type="CanvasGroup" parent="."]
 
 [node name="DamageCooldown" type="Timer" parent="Timers"]
-wait_time = 2.0
+wait_time = 1.8
 one_shot = true
 
 [node name="ReloadFullTimer" type="Timer" parent="Timers"]
@@ -106,7 +106,7 @@ wait_time = 2.2
 one_shot = true
 
 [node name="ShotDelay" type="Timer" parent="Timers"]
-wait_time = 0.3
+wait_time = 0.2
 one_shot = true
 
 [node name="ReloadPartialTimer" type="Timer" parent="Timers"]

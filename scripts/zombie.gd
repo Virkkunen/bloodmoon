@@ -2,6 +2,8 @@ extends CharacterBody2D
 
 signal zombie_killed
 
+enum States {IDLE, WANDERING, CHARGING, SEARCHING, DEATH}
+
 @export var speed = 40.0
 @export var max_health = 150.0
 @export var health : float :
@@ -16,6 +18,8 @@ signal zombie_killed
 @export var damage : float
 @export var vision_radius : float
 # @export var wander_time : float
+
+@export var state : States = States.IDLE : set = set_state
 
 @onready var navigation_agent : NavigationAgent2D = $NavigationAgent2D
 @onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
@@ -43,6 +47,7 @@ func _physics_process(_delta: float) -> void:
 	# direction = to_local(navigation_agent.get_next_path_position()).normalized()
 	# velocity = direction * speed
 	if navigation_agent.is_navigation_finished():
+		set_state(States.IDLE)
 		return
 
 	current_position = global_position
@@ -56,10 +61,17 @@ func _physics_process(_delta: float) -> void:
 
 	move_and_slide()
 
-	sprite.play("walk") if velocity.length() > 0 else sprite.play("idle")
+	# sprite.play("walk") if velocity.length() > 0 else sprite.play("idle")
 	sprite.flip_h = true if velocity.x < 0 else false
 
-	
+func set_state(new_state: States) -> void:
+	var previous_state = state
+	state = new_state
+
+	if state in [States.IDLE, States.DEATH]:
+		sprite.play("idle")
+	elif state in [States.WANDERING, States.CHARGING, States.SEARCHING]:
+		sprite.play("walk")
 
 func sprite_colour_on_damage() -> void:
 	var tween : Tween = create_tween()
@@ -93,6 +105,7 @@ func kill_zombie() -> void:
 
 func _on_zombie_vision_body_entered(body: Node2D) -> void:
 	if body.name == "Player":
+		set_state(States.CHARGING)
 		speed = 50
 		navigation_agent.target_position = body.global_position
 		player_in_vision = true
@@ -111,10 +124,12 @@ func _on_timer_navigation_timeout() -> void:
 	if player_in_vision:
 		navigation_agent.target_position = Global.player_position
 	else:
+		set_state(States.WANDERING)
 		timer_wander.start()
 
 func _on_zombie_vision_area_entered(area: Area2D) -> void:
 	if area.name == "ShotArea" and not player_in_vision:
+		set_state(States.SEARCHING)
 		navigation_agent.target_position = Global.player_position
 		speed = 40
 		timer_wander.stop()
@@ -131,6 +146,7 @@ func _on_zombie_vision_area_exited(_area: Area2D) -> void:
 
 func _on_timer_wander_timeout() -> void:
 	if not player_in_vision:
+		set_state(States.WANDERING)
 		speed = 10
 		timer_wander.wait_time = randf_range(1, 4)
 		timer_wander.start()
@@ -139,4 +155,3 @@ func _on_timer_wander_timeout() -> void:
 
 func _on_navigation_agent_2d_velocity_computed(safe_velocity: Vector2) -> void:
 	velocity = safe_velocity
-	pass
