@@ -11,7 +11,7 @@ enum GunType {PISTOL, REVOLVER, SMG, SHOTGUN, AR}
 @export var state : States = States.IDLE : set = set_state
 @export var gun_type : GunType = GunType.PISTOL : set = set_gun_type
 # gun properties
-@export var mag_count : int : 
+@export var mag_count : int :
 	get:
 		return mag_count
 	set(value):

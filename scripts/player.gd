@@ -23,7 +23,7 @@ signal player_dead
 @onready var Hud : CanvasLayer = $"../HUD"
 @onready var timer_damage_cooldown : Timer = $Timers/DamageCooldown
 
-@onready var sprite : AnimatedSprite2D = $AnimatedSprite2D
+@onready var sprite : AnimatedSprite2D = $sprite
 @onready var gun : Node2D = $Gun
 
 @onready var camera : Camera2D = $Camera2D

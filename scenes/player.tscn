@@ -11,41 +11,41 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_pfkrn"]
 size = Vector2(11, 15)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_3fftb"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_lubsu"]
 atlas = ExtResource("2_wypnn")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_fbgiy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_mik7t"]
 atlas = ExtResource("2_wypnn")
 region = Rect2(0, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_602fq"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_5y51t"]
 atlas = ExtResource("2_wypnn")
 region = Rect2(16, 0, 16, 16)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vpjc5"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_yiap6"]
 atlas = ExtResource("2_wypnn")
 region = Rect2(32, 0, 16, 16)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_dcyio"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_c6s1b"]
 animations = [{
 "frames": [{
-"duration": 0.6,
-"texture": SubResource("AtlasTexture_3fftb")
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lubsu")
 }],
 "loop": true,
 "name": &"idle",
 "speed": 5.0
 }, {
 "frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_fbgiy")
+"duration": 1.4,
+"texture": SubResource("AtlasTexture_mik7t")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_602fq")
+"texture": SubResource("AtlasTexture_5y51t")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vpjc5")
+"texture": SubResource("AtlasTexture_yiap6")
 }],
 "loop": true,
 "name": &"walk",
@@ -56,6 +56,7 @@ animations = [{
 radius = 256.0
 
 [node name="Player" type="CharacterBody2D"]
+z_index = 10
 position = Vector2(456, 248)
 scale = Vector2(2, 2)
 collision_layer = 4
@@ -79,11 +80,12 @@ editor_draw_limits = true
 position = Vector2(-0.5, 0.5)
 shape = SubResource("RectangleShape2D_pfkrn")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_dcyio")
-animation = &"idle"
+[node name="sprite" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_c6s1b")
+animation = &"walk"
 
 [node name="Gun" parent="." instance=ExtResource("3_jrt3l")]
+z_index = 1
 
 [node name="Timers" type="CanvasGroup" parent="."]
 
