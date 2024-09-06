@@ -1,22 +1,33 @@
-- [ ] Vision cones and sound
-    - map starts blank, anything on vision cone is visible, seen walls outside vision are dimmer?
-    - player makes sound on a radius depending on actions, zombies get alerted on an outer radius and turn roughly towards sound direction
-    - on inner radius zombies charge to player
+# TODO
+
+- [-] Vision cones and sound
+  - map starts blank, anything on vision cone is visible, seen walls outside vision are dimmer?
+  - player makes sound on a radius depending on actions, zombies get alerted on an outer radius and turn roughly towards sound direction
+  - on inner radius zombies charge to player
 - [ ] more guns
-    - pickups, reserve mags
-- [ ] better sprites
-    - especially tilemaps
+  - [x] pickups, reserve mags
+  - [ ] sfx for the guns
+  - [ ] better sprites
+- [ ] tilemaps
+  - [ ] better sprites
+  - [ ] separate in layers (ground, walls)
+    - [ ] rewrite collision nav
+- [ ] more zombie types
+  - [ ] better sprites
 - [ ] menu, options, help, credits, game over screens
-    - going to menu shouldn't reset the game, just pause it
-- [ ] zombies navigation
+  - going to menu shouldn't reset the game, just pause it
+- [x] zombies navigation
+  - [ ] fine tune
 - [ ] more sounds
-    - zombies random noises, getting hit, dying, charging, attacking
-    - player getting hit, footsteps, better shot sound
-- [ ] fix tilemaps
-    - increase scale, use more sprites
+  - zombies random noises, getting hit, dying, charging, attacking
+  - player getting hit, footsteps, better shot sound
 - [ ] cleanup code
-
-
-- player has 2 area2d that are active when moving
-- when palyer shoots, spawns a point with 2 area2d, gets area collision with zombies inside radius and run functions to activate them
-- zombies have wander speed and charge speed
+- [ ] crosshair
+  - [ ] reload timer on crosshair
+- [ ] fix bullet stopping collision with zombies
+- [ ] fix zombies avoiding collision with bodies
+- [ ] fine tune states
+- [ ] fix spawn
+  - spawner should not remove entries from array, but compare to existing zombies positions
+- [ ] timer for crates respawn
+- [ ] ammo crate sprite
