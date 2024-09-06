@@ -28,6 +28,7 @@ enum GunType {PISTOL, REVOLVER, SMG, SHOTGUN, AR}
 			set_state(States.EMPTY)
 @export var damage : float
 @export var bullet_speed : float
+@export var spread : float
 @export var shot_delay : float
 @export var full_reload_duration : float
 @export var partial_reload_duration : float
@@ -48,7 +49,7 @@ var Bullet : PackedScene = preload("res://scenes/bullet.tscn")
 func _ready() -> void:
 	timer_reload.timeout.connect(_on_reload_timer_timeout)
 	timer_shot_delay.timeout.connect(_on_shot_delay_timeout)
-	set_gun_type(GunType.SMG)
+	set_gun_type(GunType.AR)
 
 func _physics_process(_delta: float) -> void:
 	camera_rotation()
@@ -72,6 +73,7 @@ func set_gun_type(new_type: GunType) -> void:
 		Hud.ammo_bar.max_value = mag_size
 		ammo = mag_size
 		bullet_speed = 1000
+		spread = 2
 		damage = 18.0
 		shot_delay = 0.4
 		full_reload_duration = 2.2
@@ -82,10 +84,22 @@ func set_gun_type(new_type: GunType) -> void:
 		Hud.ammo_bar.max_value = mag_size
 		ammo = mag_size
 		bullet_speed = 1200
+		spread = 8
 		damage = 12.0
 		shot_delay = 0.06
 		full_reload_duration = 2.2
 		partial_reload_duration = 1.1
+	elif gun_type == GunType.AR:
+		mag_count = 5
+		mag_size = 30
+		Hud.ammo_bar.max_value = mag_size
+		ammo = mag_size
+		bullet_speed = 1800
+		spread = 4
+		damage = 33.0
+		shot_delay = 0.125
+		full_reload_duration = 3.2
+		partial_reload_duration = 1.6
 
 # reloading
 func reload() -> void:
@@ -122,8 +136,13 @@ func shoot() -> void:
 		timer_shot_delay.start()
 
 		var bullet = Bullet.instantiate() as Area2D
+
 		bullet.position = muzzle.global_position
-		bullet.velocity = get_muzzle_direction(bullet) * bullet.speed
+		var bullet_direction = get_muzzle_direction(bullet)
+		# var bullet_direction = muzzle.transform.x.normalized() # supposedly the facing direction of the marker
+		# spread
+		var spread_angle = deg_to_rad(randf_range(-spread, spread))
+		bullet.velocity = bullet_direction.rotated(spread_angle) * bullet.speed
 		bullet.damage = damage
 		get_tree().root.add_child(bullet)
 
