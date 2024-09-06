@@ -1,16 +1,22 @@
 extends Node2D
 
 signal gun_state
-signal gun_type_signal
 signal ammo_changed
 signal mag_changed
+signal gun_changed
 
 enum States {IDLE, SHOOTING, RELOADINGPARTIAL, RELOADINGFULL, EMPTY}
-enum GunType {PISTOL, REVOLVER, SMG, SHOTGUN, AR}
+
 
 @export var state : States = States.IDLE : set = set_state
-@export var gun_type : GunType = GunType.PISTOL : set = set_gun_type
 # gun properties
+@export var gun_type : Global.GunType
+@export var damage : float
+@export var bullet_speed : float
+@export var spread : float
+@export var shot_delay : float
+@export var full_reload_duration : float
+@export var partial_reload_duration : float
 @export var mag_count : int :
 	get:
 		return mag_count
@@ -26,12 +32,8 @@ enum GunType {PISTOL, REVOLVER, SMG, SHOTGUN, AR}
 		emit_signal("ammo_changed", ammo, mag_count)
 		if ammo == 0:
 			set_state(States.EMPTY)
-@export var damage : float
-@export var bullet_speed : float
-@export var spread : float
-@export var shot_delay : float
-@export var full_reload_duration : float
-@export var partial_reload_duration : float
+
+@export var data : Resource
 
 @onready var sprite : Sprite2D = $GunSprite
 @onready var muzzle : Marker2D = $Muzzle
@@ -47,9 +49,25 @@ enum GunType {PISTOL, REVOLVER, SMG, SHOTGUN, AR}
 var Bullet : PackedScene = preload("res://scenes/bullet.tscn")
 
 func _ready() -> void:
+	if data:
+		gun_type = data.gun_type
+		damage = data.damage
+		bullet_speed = data.bullet_speed
+		spread = data.spread
+		shot_delay = data.shot_delay
+		full_reload_duration = data.full_reload_duration
+		partial_reload_duration = data.partial_reload_duration
+		mag_count = data.mag_count
+		mag_size = data.mag_size
+		ammo = mag_size
+		Hud.ammo_bar.max_value = mag_size
+		sprite.texture = load(data.sprite)
+	
+		emit_signal("gun_changed", ammo, mag_count, mag_size, gun_type)
+		print("signal sent")
+
 	timer_reload.timeout.connect(_on_reload_timer_timeout)
 	timer_shot_delay.timeout.connect(_on_shot_delay_timeout)
-	set_gun_type(GunType.AR)
 
 func _physics_process(_delta: float) -> void:
 	camera_rotation()
@@ -63,50 +81,10 @@ func set_state(new_state: States) -> void:
 	elif state in [States.RELOADINGFULL, States.RELOADINGPARTIAL]:
 		reload_anim()
 
-func set_gun_type(new_type: GunType) -> void:
-	gun_type = new_type
-	emit_signal("gun_type_signal", gun_type)
-
-	if gun_type == GunType.PISTOL:
-		mag_count = 6
-		mag_size = 9
-		Hud.ammo_bar.max_value = mag_size
-		ammo = mag_size
-		bullet_speed = 1000
-		spread = 2
-		damage = 18.0
-		shot_delay = 0.4
-		full_reload_duration = 2.2
-		partial_reload_duration = 1.1
-	elif gun_type == GunType.SMG:
-		mag_count = 4
-		mag_size = 40
-		Hud.ammo_bar.max_value = mag_size
-		ammo = mag_size
-		bullet_speed = 1200
-		spread = 8
-		damage = 12.0
-		shot_delay = 0.06
-		full_reload_duration = 2.2
-		partial_reload_duration = 1.1
-	elif gun_type == GunType.AR:
-		mag_count = 5
-		mag_size = 30
-		Hud.ammo_bar.max_value = mag_size
-		ammo = mag_size
-		bullet_speed = 1800
-		spread = 4
-		damage = 33.0
-		shot_delay = 0.125
-		full_reload_duration = 3.2
-		partial_reload_duration = 1.6
-
 # reloading
 func reload() -> void:
 	if state in [States.SHOOTING, States.RELOADINGFULL, States.RELOADINGPARTIAL] or mag_count <= 0:
 		return
-
-	# timer_shot_delay.stop() # to prevent player shooting while reloading
 
 	var reload_type = States.RELOADINGFULL if ammo <= 0 else States.RELOADINGPARTIAL
 	set_state(reload_type)

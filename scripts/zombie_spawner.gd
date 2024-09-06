@@ -3,7 +3,6 @@ extends Node2D
 var Zombie = preload("res://scenes/zombie.tscn")
 
 @export var min_distance_from_player = 500
-@export var min_distance_from_edges = 40
 
 func spawn_zombies(num_zombies: int = 10) -> void:
 	var valid_position = false

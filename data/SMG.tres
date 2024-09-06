@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="GunResource" load_steps=2 format=3 uid="uid://dnutnqm7t1f2u"]
+
+[ext_resource type="Script" path="res://data/GunResource.gd" id="1_fqiv5"]
+
+[resource]
+script = ExtResource("1_fqiv5")
+gun_type = 2
+damage = 12.0
+bullet_speed = 1200.0
+spread = 5.0
+shot_delay = 0.08
+full_reload_duration = 2.6
+partial_reload_duration = 1.2
+mag_count = 4
+mag_size = 40
+sprite = "res://assets/sprites/smg.png"

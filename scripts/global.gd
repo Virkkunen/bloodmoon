@@ -2,6 +2,8 @@ extends Node2D
 
 signal score_changed
 
+enum GunType {PISTOL, REVOLVER, SMG, SHOTGUN, AR}
+
 @export var colour01 = Color.html("#eff9d6")
 @export var colour02 = Color.html("#ba5044")
 @export var colour03 = Color.html("#7a1c4b")

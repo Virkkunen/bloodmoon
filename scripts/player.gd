@@ -116,6 +116,20 @@ func sprite_colour_on_damage() -> void:
 	sprite.modulate = Global.colour03
 	tween.tween_property(sprite, "modulate", Color(1, 1, 1), 1.2).set_delay(0.3).set_ease(Tween.EASE_IN)
 
+func add_ammo(mag_count: int) -> void:
+	gun.mag_count += mag_count
+
+func change_gun(scene: String) -> void:
+	print(scene)
+	var new_gun_scene : PackedScene = load(scene)
+	gun.queue_free()
+	var new_gun = new_gun_scene.instantiate()
+	add_child(new_gun)
+	gun = new_gun
+	Hud.Gun = gun
+	print(gun)
+
+
 # func random_sound(sound: AudioStreamPlayer2D) -> void:
 # 	sound.pitch_scale = randf_range(0.8, 1.05)
 # 	sound.volume_db = randf_range(-1.2, 1.4)

@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://clqlpv3d8lxvb"]
+[gd_scene load_steps=9 format=3 uid="uid://clqlpv3d8lxvb"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_bdlwq"]
 [ext_resource type="PackedScene" uid="uid://c4avsyw2xgrox" path="res://scenes/hud.tscn" id="3_i8p8l"]
 [ext_resource type="Script" path="res://scripts/zombie_spawner.gd" id="3_tepdq"]
 [ext_resource type="PackedScene" uid="uid://c8ko5ni8ykps" path="res://scenes/player.tscn" id="4_dcm4k"]
+[ext_resource type="Script" path="res://scripts/box_spawner.gd" id="5_ynt1u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_opcim"]
 size = Vector2(2302, 20)
@@ -87,3 +88,6 @@ offset_bottom = 1254.0
 [node name="HUD" parent="." instance=ExtResource("3_i8p8l")]
 
 [node name="Player" parent="." instance=ExtResource("4_dcm4k")]
+
+[node name="BoxSpawner" type="Node2D" parent="."]
+script = ExtResource("5_ynt1u")

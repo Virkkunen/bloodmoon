@@ -5,6 +5,7 @@ signal map_loaded
 @onready var player_instance : CharacterBody2D = $Player
 @onready var hud : CanvasLayer = $HUD
 @onready var zombie_spawner : Node2D = $ZombieSpawner
+@onready var box_spawner : Node2D = $BoxSpawner
 
 var tilemap_walls : TileMapLayer = null
 
@@ -18,7 +19,9 @@ var maps = [
 func _ready() -> void:
 	Engine.max_fps = 120
 	load_level()
-	zombie_spawner.spawn_zombies(randi_range(25, 100))
+	zombie_spawner.call_deferred("spawn_zombies", randi_range(25, 100))
+	box_spawner.call_deferred("spawn_boxes")
+
 
 
 func load_level() -> void:

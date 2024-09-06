@@ -23,6 +23,7 @@ func _ready() -> void:
 
 	Gun.ammo_changed.connect(update_ammo)
 	Gun.mag_changed.connect(update_mags)
+	Gun.gun_changed.connect(update_gun)
 	Player.health_changed.connect(update_health)
 	Player.player_dead.connect(_on_player_dead)
 	Global.score_changed.connect(update_score)
@@ -35,9 +36,7 @@ func _process(delta: float) -> void:
 	if health_bar.value != target_health_value:
 		health_bar.value = lerp(health_bar.value, target_health_value, animation_speed * delta)
 
-	fps_label.text = "FPS: " + str(Engine.get_frames_per_second()) if Global.debug else ""
-	$DEBUG/can_shoot.text = "Gun state: " + str(Gun.state) if Global.debug else ""
-	$DEBUG/can_reload.text = "Player state: " + str(Player.state) if Global.debug else ""
+	fps_label.text = "FPS: " + str(Engine.get_frames_per_second())
 
 func update_score() -> void:
 	score_label.text = str(Global.score)
@@ -47,7 +46,6 @@ func update_health(health: float) -> void:
 	target_health_value = health
 
 func update_ammo(ammo: int, mags: int) -> void:
-	$DEBUG/ammo.text = "Ammo: " + str(ammo) if Global.debug else ""
 	target_ammo_value = float(ammo)
 	if ammo == 0 and mags > 0:
 		show_reload_hint("reload")
@@ -85,3 +83,13 @@ func show_floating_score() -> void:
 
 func _on_player_dead() -> void:
 	queue_free()
+
+func update_gun(ammo: int, mag_count: int, mag_size: int, gun_type: int) -> void:
+	print("received signal")
+	Gun = get_parent().get_node("Player").get_node("Gun")
+	Gun.ammo_changed.connect(update_ammo)
+	Gun.mag_changed.connect(update_mags)
+	Gun.gun_changed.connect(update_gun)
+	# update_ammo(ammo, mag_count)
+	# update_mags(mag_count)
+	# ammo_bar.max_value = mag_size
