@@ -24,26 +24,34 @@ signal player_dead
 @onready var timer_damage_cooldown : Timer = $Timers/DamageCooldown
 
 @onready var sprite : AnimatedSprite2D = $sprite
-@onready var gun : Node2D = $Gun
+# @onready var gun : Node2D = $player_gun
 
 @onready var camera : Camera2D = $Camera2D
 @onready var area_shot : Area2D = $ShotArea
 
 var can_be_damaged = true
+var gun : Node2D = null
 
 func _ready() -> void:
 	health = max_health
-
+	load_gun("AR")
 	# signals
 	timer_damage_cooldown.timeout.connect(_on_damage_cooldown_timeout)
 
+func load_gun(gun_name: String) -> void:
+	var data = load("res://resources/guns/" + gun_name + ".tres")
+	var new_gun_scene : PackedScene = load("res://scenes/gun.tscn")
+	var new_gun = new_gun_scene.instantiate()
+	new_gun.data = data
+	# new_gun.position = Vector2(6, 2)
+	add_child(new_gun)
+	gun = new_gun
+	Hud.connect_gun(gun, gun.ammo, gun.mag_count, gun.mag_size)
 
 func _physics_process(_delta: float) -> void:
 	get_input()
 	move_and_slide()
 	update_animation()
-
-	$"../HUD/DEBUG/health".text = "health: " + str(health) if Global.debug else ""
 
 	# collision
 	for i in get_slide_collision_count():
@@ -119,15 +127,12 @@ func sprite_colour_on_damage() -> void:
 func add_ammo(mag_count: int) -> void:
 	gun.mag_count += mag_count
 
-func change_gun(scene: String) -> void:
-	print(scene)
-	var new_gun_scene : PackedScene = load(scene)
-	gun.queue_free()
-	var new_gun = new_gun_scene.instantiate()
-	add_child(new_gun)
-	gun = new_gun
-	Hud.Gun = gun
-	print(gun)
+func change_gun(gun_name: String) -> void:
+	print(gun_name)
+	var data = load("res://resources/guns/" + gun_name + ".tres")
+	gun.data = data
+	gun.load_gun()
+
 
 
 # func random_sound(sound: AudioStreamPlayer2D) -> void:

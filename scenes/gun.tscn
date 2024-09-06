@@ -1,0 +1,38 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnklno7s5623g"]
+
+[ext_resource type="Script" path="res://scripts/gun.gd" id="1_hsxwg"]
+
+[node name="Gun" type="Node2D"]
+script = ExtResource("1_hsxwg")
+
+[node name="GunSprite" type="Sprite2D" parent="."]
+position = Vector2(5, 0)
+
+[node name="Muzzle" type="Marker2D" parent="GunSprite"]
+position = Vector2(-5, 0)
+
+[node name="Sounds" type="CanvasGroup" parent="."]
+
+[node name="ReloadPartialSound" type="AudioStreamPlayer2D" parent="Sounds"]
+volume_db = 6.0
+area_mask = 4
+
+[node name="ReloadFullSound" type="AudioStreamPlayer2D" parent="Sounds"]
+volume_db = 6.0
+area_mask = 4
+
+[node name="Shot01" type="AudioStreamPlayer2D" parent="Sounds"]
+volume_db = -4.0
+area_mask = 4
+
+[node name="ShotEmpty" type="AudioStreamPlayer2D" parent="Sounds"]
+volume_db = 6.0
+area_mask = 4
+
+[node name="Timers" type="CanvasGroup" parent="."]
+
+[node name="ShotDelay" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="Timers"]
+one_shot = true

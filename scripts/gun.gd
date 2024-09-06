@@ -10,7 +10,7 @@ enum States {IDLE, SHOOTING, RELOADINGPARTIAL, RELOADINGFULL, EMPTY}
 
 @export var state : States = States.IDLE : set = set_state
 # gun properties
-@export var gun_type : Global.GunType
+@export var gun_type : String
 @export var damage : float
 @export var bullet_speed : float
 @export var spread : float
@@ -36,7 +36,7 @@ enum States {IDLE, SHOOTING, RELOADINGPARTIAL, RELOADINGFULL, EMPTY}
 @export var data : Resource
 
 @onready var sprite : Sprite2D = $GunSprite
-@onready var muzzle : Marker2D = $Muzzle
+@onready var muzzle : Marker2D = $GunSprite/Muzzle
 @onready var sound_reload_partial : AudioStreamPlayer2D = $Sounds/ReloadPartialSound
 @onready var sound_reload_full : AudioStreamPlayer2D = $Sounds/ReloadFullSound
 @onready var sound_shot01 : AudioStreamPlayer2D = $Sounds/Shot01
@@ -49,22 +49,7 @@ enum States {IDLE, SHOOTING, RELOADINGPARTIAL, RELOADINGFULL, EMPTY}
 var Bullet : PackedScene = preload("res://scenes/bullet.tscn")
 
 func _ready() -> void:
-	if data:
-		gun_type = data.gun_type
-		damage = data.damage
-		bullet_speed = data.bullet_speed
-		spread = data.spread
-		shot_delay = data.shot_delay
-		full_reload_duration = data.full_reload_duration
-		partial_reload_duration = data.partial_reload_duration
-		mag_count = data.mag_count
-		mag_size = data.mag_size
-		ammo = mag_size
-		Hud.ammo_bar.max_value = mag_size
-		sprite.texture = load(data.sprite)
-	
-		emit_signal("gun_changed", ammo, mag_count, mag_size, gun_type)
-		print("signal sent")
+	load_gun()
 
 	timer_reload.timeout.connect(_on_reload_timer_timeout)
 	timer_shot_delay.timeout.connect(_on_shot_delay_timeout)
@@ -80,6 +65,26 @@ func set_state(new_state: States) -> void:
 		shot_anim()
 	elif state in [States.RELOADINGFULL, States.RELOADINGPARTIAL]:
 		reload_anim()
+
+func load_gun() -> void:
+	if data:
+		gun_type = data.type
+		damage = data.damage
+		bullet_speed = data.bullet_speed
+		spread = data.spread
+		shot_delay = data.shot_delay
+		full_reload_duration = data.full_reload_duration
+		partial_reload_duration = data.partial_reload_duration
+		mag_count = data.mag_count
+		mag_size = data.mag_size
+		ammo = mag_size
+		sprite.texture = data.sprite
+		sound_reload_full.stream = data.full_reload_sound
+		sound_reload_partial.stream = data.partial_reload_sound
+		sound_shot_empty.stream = data.click_sound
+		sound_shot01.stream = data.shot_sound
+
+		Hud.ammo_bar.max_value = mag_size
 
 # reloading
 func reload() -> void:

@@ -1,8 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://c8ko5ni8ykps"]
+[gd_scene load_steps=14 format=3 uid="uid://c8ko5ni8ykps"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_uuags"]
 [ext_resource type="Texture2D" uid="uid://b1he6tpyrhna8" path="res://assets/sprites/player.png" id="2_wypnn"]
-[ext_resource type="PackedScene" uid="uid://cnklno7s5623g" path="res://scenes/guns/gun.tscn" id="3_i6gnk"]
 [ext_resource type="AudioStream" uid="uid://c2guwjcuqle14" path="res://assets/sfx/reload_partial.ogg" id="5_ktjt7"]
 [ext_resource type="AudioStream" uid="uid://c5p504lem5bpf" path="res://assets/sfx/reload_full.ogg" id="6_7bnfi"]
 [ext_resource type="AudioStream" uid="uid://o2varaljpn5c" path="res://assets/sfx/shot01.ogg" id="7_nwq0k"]
@@ -83,8 +82,6 @@ shape = SubResource("RectangleShape2D_pfkrn")
 [node name="sprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_c6s1b")
 animation = &"walk"
-
-[node name="Gun" parent="." instance=ExtResource("3_i6gnk")]
 
 [node name="Timers" type="CanvasGroup" parent="."]
 

@@ -65,7 +65,7 @@ func _physics_process(_delta: float) -> void:
 	sprite.flip_h = true if velocity.x < 0 else false
 
 func set_state(new_state: States) -> void:
-	var previous_state = state
+	# var previous_state = state
 	state = new_state
 
 	if state in [States.IDLE, States.DEATH]:
@@ -83,6 +83,7 @@ func get_hit(incoming_damage: float) -> void:
 	health -= incoming_damage
 
 func kill_zombie() -> void:
+	set_state(States.DEATH)
 	# get score
 	emit_signal("zombie_killed", self)
 	if Global.zombies.has(self):
@@ -93,7 +94,9 @@ func kill_zombie() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	head.collision_layer = 0
+	head.collision_mask = 0
 	zombie_body.collision_layer = 0
+	zombie_body.collision_mask = 0
 	sprite.play("idle")
 	# animation
 	var tween : Tween = create_tween()

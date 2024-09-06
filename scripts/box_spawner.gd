@@ -26,7 +26,7 @@ func spawn_boxes(num_boxes : int = 15) -> void:
 		# box.box_type = randi() % 2
 		box.box_type = 0
 		box.mag_count = randi_range(min_mag_count, max_mag_count)
-		box.gun_type = randi_range(0, Global.GunType.size() -1)
+		box.gun_index = randi_range(0, 2)
 		box.name = "Box " + str(i)
 		Global.spawnable_cells.erase(new_position)
 		add_child(box)

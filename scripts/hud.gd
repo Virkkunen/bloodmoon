@@ -6,7 +6,6 @@ extends CanvasLayer
 @onready var mag_count_label : Label = $MagCountLabel
 @onready var score_label : Label = $Kills/KillsCounter
 @onready var Player : CharacterBody2D = $"../Player"
-@onready var Gun : Node2D = $"../Player/Gun"
 @onready var Spawner : Node2D = $"../ZombieSpawner"
 @onready var FloatingScore : PackedScene = preload("res://scenes/floating_score.tscn")
 @onready var fps_label : Label = $FPSLabel
@@ -14,21 +13,25 @@ extends CanvasLayer
 @export var animation_speed = 12
 var target_ammo_value : float
 var target_health_value : float
+var player_gun : Node2D = null
 
 func _ready() -> void:
 	# health_bar.set_deferred("max_value", Player.max_health)
 	health_bar.max_value = Player.max_health
-	ammo_bar.max_value = Gun.mag_size
+	# ammo_bar.max_value = player_gun.mag_size
 	score_label.text = "0"
-
-	Gun.ammo_changed.connect(update_ammo)
-	Gun.mag_changed.connect(update_mags)
-	Gun.gun_changed.connect(update_gun)
+	
 	Player.health_changed.connect(update_health)
 	Player.player_dead.connect(_on_player_dead)
 	Global.score_changed.connect(update_score)
 
-	$DEBUG.visible = true if Global.debug else false
+func connect_gun(gun_node: Node2D, ammo: int, mag_count: int, mag_size: int) -> void:
+	player_gun = gun_node
+	player_gun.ammo_changed.connect(update_ammo)
+	player_gun.mag_changed.connect(update_mags)
+	ammo_bar.max_value = mag_size
+	update_ammo(ammo, mag_count)
+	update_mags(mag_count)
 
 func _process(delta: float) -> void:
 	if ammo_bar.value != target_ammo_value:
@@ -83,13 +86,3 @@ func show_floating_score() -> void:
 
 func _on_player_dead() -> void:
 	queue_free()
-
-func update_gun(ammo: int, mag_count: int, mag_size: int, gun_type: int) -> void:
-	print("received signal")
-	Gun = get_parent().get_node("Player").get_node("Gun")
-	Gun.ammo_changed.connect(update_ammo)
-	Gun.mag_changed.connect(update_mags)
-	Gun.gun_changed.connect(update_gun)
-	# update_ammo(ammo, mag_count)
-	# update_mags(mag_count)
-	# ammo_bar.max_value = mag_size
