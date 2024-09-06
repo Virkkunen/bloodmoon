@@ -87,4 +87,3 @@ offset_bottom = 1254.0
 [node name="HUD" parent="." instance=ExtResource("3_i8p8l")]
 
 [node name="Player" parent="." instance=ExtResource("4_dcm4k")]
-z_index = 5

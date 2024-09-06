@@ -17,6 +17,14 @@ offset_bottom = 1000.0
 theme = ExtResource("3_ha305")
 show_percentage = false
 
+[node name="MagCountLabel" type="Label" parent="."]
+offset_left = 224.0
+offset_top = 1008.0
+offset_right = 342.0
+offset_bottom = 1048.0
+theme = ExtResource("2_vfj5k")
+vertical_alignment = 1
+
 [node name="AmmoBar" type="ProgressBar" parent="."]
 offset_left = 32.0
 offset_top = 1008.0

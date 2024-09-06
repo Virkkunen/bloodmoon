@@ -1,0 +1,50 @@
+[gd_scene load_steps=7 format=3 uid="uid://uyjihso3rvi8"]
+
+[ext_resource type="Script" path="res://scripts/gun.gd" id="1_2ysqv"]
+[ext_resource type="Texture2D" uid="uid://dk85ay8qksj16" path="res://assets/sprites/gun.png" id="1_3e3qu"]
+[ext_resource type="AudioStream" uid="uid://c2guwjcuqle14" path="res://assets/sfx/reload_partial.ogg" id="3_lqk0m"]
+[ext_resource type="AudioStream" uid="uid://c5p504lem5bpf" path="res://assets/sfx/reload_full.ogg" id="4_17k82"]
+[ext_resource type="AudioStream" uid="uid://o2varaljpn5c" path="res://assets/sfx/shot01.ogg" id="5_uk6vq"]
+[ext_resource type="AudioStream" uid="uid://thhximpinna8" path="res://assets/sfx/shot_empty.ogg" id="6_wm3by"]
+
+[node name="Gun" type="Node2D"]
+script = ExtResource("1_2ysqv")
+
+[node name="GunSprite" type="Sprite2D" parent="."]
+position = Vector2(6.5, 0)
+texture = ExtResource("1_3e3qu")
+
+[node name="Muzzle" type="Marker2D" parent="."]
+position = Vector2(9, -1)
+
+[node name="Sounds" type="CanvasGroup" parent="."]
+
+[node name="ReloadPartialSound" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2(-0.5, 3.5)
+stream = ExtResource("3_lqk0m")
+volume_db = 6.0
+area_mask = 4
+
+[node name="ReloadFullSound" type="AudioStreamPlayer2D" parent="Sounds"]
+position = Vector2(-0.5, 3.5)
+stream = ExtResource("4_17k82")
+volume_db = 6.0
+area_mask = 4
+
+[node name="Shot01" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("5_uk6vq")
+volume_db = -4.0
+area_mask = 4
+
+[node name="ShotEmpty" type="AudioStreamPlayer2D" parent="Sounds"]
+stream = ExtResource("6_wm3by")
+volume_db = 6.0
+area_mask = 4
+
+[node name="Timers" type="CanvasGroup" parent="."]
+
+[node name="ShotDelay" type="Timer" parent="Timers"]
+one_shot = true
+
+[node name="ReloadTimer" type="Timer" parent="Timers"]
+one_shot = true
